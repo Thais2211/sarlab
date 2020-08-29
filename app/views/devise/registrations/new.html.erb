@@ -1,29 +1,59 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="container col-6">
+  <div class="card o-hidden border-0 shadow-lg my-3">
+    <div class="card-body p-0">
+      <!-- Nested Row within Card Body -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="p-5">
+            <div class="text-center">
+              <h1 class="h4 text-gray-900 mb-4">Criar uma nova conta!</h1>
+            </div>
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'user'}) do |f| %>
+              <div class="bg-gradient-danger font-weight-bold text-gray-900">
+                <%= render "devise/shared/error_messages", resource: resource %>
+              </div>
+              <div class="form-group">
+                <%= f.label :nome %><br />
+                <%= f.text_field :nome, class: 'form-control form-control-user', autofocus: true%>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <%= f.label :ra, 'RA' %>
+                  <%= f.text_field :ra, class: 'form-control form-control-user' %>
+                </div>
+                <div class="col-sm-6">
+                  <%= f.label :celular %><br />
+                  <%= f.text_field :celular, id:'tel_celular', class: 'form-control form-control-user' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :email %><br />
+                <%= f.email_field :email, class: 'form-control form-control-user', autocomplete: "email" %>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <%= f.label :password, 'Senha' %>
+                  <% if @minimum_password_length %>
+                    <em>(minímo <%= @minimum_password_length %> caracteres)</em>
+                  <% end %><br />
+                  <%= f.password_field :password, class: 'form-control form-control-user', autocomplete: "new-password" %>
+                </div>
+                <div class="col-sm-6">
+                  <%= f.label :password_confirmation, 'Confirmar senha' %><br />
+                  <%= f.password_field :password_confirmation, class: 'form-control form-control-user', autocomplete: "new-password" %>
+                </div>
+              </div>
+              <div class="actions">
+                <%= f.submit "Inscrever-se", class: 'btn btn-primary btn-user btn-block' %>
+              </div>
+            <% end %>
+            <hr>
+            <div class="text-center">
+              <%= render "devise/shared/links" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
