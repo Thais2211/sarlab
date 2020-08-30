@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :escolas
   root to: 'welcome#index'
   get 'welcome/index'
 
