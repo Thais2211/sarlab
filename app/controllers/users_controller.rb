@@ -13,7 +13,6 @@ class UsersController < ApplicationController
   end
 
   def create
-    byebug
     @user = User.new(user_params)
     @user.ativo = true
     @user.permissao_id = 1
@@ -29,10 +28,27 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  #put
+  def update
+    byebug
+    respond_to do |format|
+      if @user.update(user_update_params)
+        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html { render :edit }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   def set_usuario
-    #@user = current_user.admin? ? User.find(params[:id].present? ? params[:id] : current_user.id) : current_user
+    @user = User.find(params[:id])    
   end
 
   def user_params

@@ -1,13 +1,7 @@
-<div class="container col-6">
-  <div class="card o-hidden border-0 shadow-lg my-3">
-    <div class="card-body p-0">
-      <!-- Nested Row within Card Body -->
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="p-5">
-            <div class="text-center">
-              <h1 class="h4 text-gray-900 mb-4">Criar uma nova conta! user</h1>
-            </div>
+<div class="card-body p-0">
+  <div class="row">
+    <div class="col-lg-12">
+        
             <%= form_for(@user, html: {class: 'user', autocomplete: "off"}) do |f| %>
               <div class="bg-gradient-danger font-weight-bold text-gray-900">
                
@@ -47,12 +41,6 @@
                 <%= f.submit "Inscrever-se", class: 'btn btn-primary btn-user btn-block' %>
               </div>
             <% end %>
-            <hr>
-            <div class="text-center">
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>
