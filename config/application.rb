@@ -30,5 +30,6 @@ module Reservas
     # the framework and any gems in your application.
 
     config.generators.system_tests = nil
+    config.generators.javascript_engine = :js
   end
 end
