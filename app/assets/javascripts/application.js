@@ -16,5 +16,5 @@
 //= require jquery/dist/jquery
 //= require bootstrap/dist/js/bootstrap
 //= require jquery-easing/jquery.easing.1.3
+//= require datatables
 //= require sb-admin-2
-//= require_tree .

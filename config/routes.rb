@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
 
-  resources :escolas
+  resources :escolas do
+    collection do
+      post 'novo'
+    end
+  end
+
   root to: 'welcome#index'
   get 'welcome/index'
 
