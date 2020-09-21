@@ -5733,6 +5733,9 @@ a.close.disabled {
   border-bottom: 1px solid #e3e6f0;
   border-top-left-radius: calc(0.3rem - 1px);
   border-top-right-radius: calc(0.3rem - 1px);
+  background-color: #4e73df;
+  background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+  background-size: cover;
 }
 
 .modal-header .close {
@@ -5743,6 +5746,7 @@ a.close.disabled {
 .modal-title {
   margin-bottom: 0;
   line-height: 1.5;
+  color: white; 
 }
 
 .modal-body {

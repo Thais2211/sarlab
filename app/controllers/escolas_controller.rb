@@ -1,5 +1,5 @@
 class EscolasController < ApplicationController
-  before_action :set_escola, only: [:show, :edit, :update, :destroy]
+  before_action :set_escola, only: [:show, :edit, :update, :destroy, :atualizar_escola]
 
   # GET /escolas
   # GET /escolas.json
@@ -61,10 +61,21 @@ class EscolasController < ApplicationController
     end
   end
 
-  def novo
-    byebug
-    #render :json true
+  def nova_escola
+    escola = Escola.new(nome: params[:nome], endereco: params[:endereco], numero: params[:numero], bairro: params[:bairro], 
+                        cidade: params[:cidade], responsavel: params[:responsavel], telefone: params[:telefone]);
+    escola.save!
+    render json: escola
   end
+
+  def atualizar_escola
+    byebug
+    @escola.update(nome: params[:nome], endereco: params[:endereco], numero: params[:numero], bairro: params[:bairro], 
+                        cidade: params[:cidade], responsavel: params[:responsavel], telefone: params[:telefone]);
+    @escola.save!
+    render json: @escola
+  end
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -2,7 +2,8 @@ Rails.application.routes.draw do
 
   resources :escolas do
     collection do
-      post 'novo'
+      get 'nova_escola'
+      get 'atualizar_escola'
     end
   end
 
