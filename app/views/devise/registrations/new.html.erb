@@ -43,6 +43,18 @@
                   <%= f.password_field :password_confirmation, class: 'form-control form-control-user', autocomplete: "new-password" %>
                 </div>
               </div>
+              <div class="form-group row">
+                <div class="col-sm-6">
+                  <%= f.label :escola, "Instituição"   %><br/>
+                  <%= f.collection_select :escola_id, Escola.all.order(:nome), :id, :nome, {}, {:class => "custom-select-sm form-control"} %>
+                </div>
+                <div class="col-sm-6 pt-2">
+                  <%= f.radio_button :role_id, 3, checked:true %>
+                  <%= f.label :aluno, 'Aluno' %><br/>
+                  <%= f.radio_button :role_id, 2 %>
+                  <%= f.label :prof, 'Professor'%>
+                </div>
+              </div>
               <div class="actions">
                 <%= f.submit "Inscrever-se", class: 'btn btn-primary btn-user btn-block' %>
               </div>

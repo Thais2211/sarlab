@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   belongs_to :role, optional: true
+  belongs_to :escola, optional: true
   
   validates :email, uniqueness: true
   validates :nome, :celular, presence: true

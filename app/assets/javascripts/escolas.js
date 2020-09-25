@@ -79,10 +79,7 @@ function editar_escola()
     success: function (data) {
         $('#modalEditEscola').modal('hide');
         console.log("salvou");
-        /*if($('#form_agendamento #comentario').val() != ''){
-              salvarComentario($('#form_agendamento #comentario').val(), data['id']);
-        }*/
-        //exibirMsg("Agenda salva com sucesso.");
+        toastInfo();
     }
   });
 }

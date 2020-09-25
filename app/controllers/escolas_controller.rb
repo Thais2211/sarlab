@@ -69,10 +69,10 @@ class EscolasController < ApplicationController
   end
 
   def atualizar_escola
-    byebug
     @escola.update(nome: params[:nome], endereco: params[:endereco], numero: params[:numero], bairro: params[:bairro], 
                         cidade: params[:cidade], responsavel: params[:responsavel], telefone: params[:telefone]);
     @escola.save!
+
     render json: @escola
   end
   

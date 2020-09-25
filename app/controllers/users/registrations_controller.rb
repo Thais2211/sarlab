@@ -16,7 +16,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    byebug
     build_resource(sign_up_params)
     resource.ativo = true
 
@@ -85,7 +84,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:nome, :ra, :email, :celular])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:nome, :ra, :email, :celular, :role_id, :escola_id])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
