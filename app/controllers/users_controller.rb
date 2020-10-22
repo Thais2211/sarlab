@@ -4,8 +4,9 @@ class UsersController < ApplicationController
   before_action :set_usuario, only: [:edit, :update, :destroy, :editar_usuario, :alterar_senha]
 
   def index
-    @users = User.where(ativo: true)
-    @users_inativos = User.where(ativo: false)
+    @alunos = User.where(ativo: true, role_id: 3)
+    @professores = User.where(ativo: true, role_id: 2)
+    @inativos = User.where(ativo: false)
   end
 
   def new

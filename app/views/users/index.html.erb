@@ -1,171 +1,134 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Usuários</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>nome</th>
-      <th>ra</th>
-      <th>email</th>
-      <th>celular</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= role.nome %></td>
-        <td><%= role.ra %></td>
-        <td><%= role.email %></td>
-        <td><%= role.celular %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div class="row wrapper border-bottom white-bg page-heading">
-  <div class="col-lg-10">
-    <h2>USUÁRIOS</h2>
-  </div>
-</div>
-
-<div class="wrapper wrapper-content animated fadeInRight">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="ibox float-e-margins">
-        <div class="ibox-title">
-          <h5>Cadastros</h5>
-          <div class="ibox-tools">
-            <%= button_to new_user_path, { method: 'get', class: 'btn btn-sm btn-primary' } do %>
-                <i class="fa fa-file" aria-hidden="true"> Novo Usuário</i>
-            <% end %>
+<div class="card o-hidden border-0 shadow-lg my-3">
+  <div class="card-body p-0">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="p-3">
+          <div class="text-left">
+            <span class="h1 font-weight text-lg-gray-800 mb-4">Usuários</span>            
           </div>
-        </div>
-        <div class="ibox-content">
-          <div class="tabs-container" id="tabsUsuario" >
-            <ul class="nav nav-tabs">
-              <li class="active"><a data-toggle="tab" id="tabAtivo" href="#tabsUsuario-1"> Ativos</a></li>
-              <li class=""><a data-toggle="tab" id="tabInativo" href="#tabsUsuario-2"> Inativos</a></li>
-            </ul>
-            <div class="tab-content">
-              <div id="tabsUsuario-1" class="tab-pane active">
-                <div class="panel-body">
-                  <table class="table table-striped table-bordered table-hover table-users-ativos">
-                    <thead>
-                    <tr>
-                      <th>Email</th>
-                      <th>Nome</th>
-                      <th>Admin</th>
-                      <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% @users.each do |user| %>
-                        <tr>
-                          <td><%= user.email %></td>
-                          <td><%= user.name %></td>
-                          <td><%= human_boolean user.admin %></td>
-                          <td><%= link_to edit_user_path(user), { class: 'btn btn-sm btn-default btn-table', title: 'Editar', 'data-toggle' => 'tooltip', 'data-placement' => 'right' } do %>
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            <% end %></td>
-                        </tr>
-                    <% end %>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                  </table>
-                </div>
-              </div>
-              <div id="tabsUsuario-2" class="tab-pane">
-                <div class="panel-body">
-                  <table class="table table-striped table-bordered table-hover table-users-inativos">
-                    <thead>
-                    <tr>
-                      <th>Email</th>
-                      <th>Nome</th>
-                      <th>Admin</th>
-                      <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% @users_inativos.each do |user| %>
-                        <tr>
-                          <td><%= user.email %></td>
-                          <td><%= user.name %></td>
-                          <td><%= human_boolean user.admin %></td>
-                          <td><%= link_to edit_user_path(user), { class: 'btn btn-sm btn-default btn-table', title: 'Editar', 'data-toggle' => 'tooltip', 'data-placement' => 'right' } do %>
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            <% end %></td>
-                        </tr>
-                    <% end %>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                  </table>
-                </div>
-            </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<% content_for :javascript do %>
-    <script type="text/javascript">
-        $(function() {
-            $('.table-users-ativos').DataTable({
-                pageLength: 10,
-                rowReorder: {
-                    selector: 'td:nth-child(2)'
-                },
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                "ordering": true,
-                buttons: [
-                    {extend: 'excel', title: 'Usuários'},
-                    {extend: 'pdf', title: 'Usuários'}
-                ],
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
-                }
+<div class="card o-hidden border-0 shadow-lg my-3">
+  <div class="card-body p-0">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="p-3">
+          <div class="tabs-container" id="tabsUsuario" >
+            <ul class="nav nav-tabs">
+              <li class="nav-item nav-link active"><a data-toggle="tab" id="tabAluno" href="#tab-alunos"> Alunos (<%= @alunos.count %>)</a></li>
+              <li class="nav-item nav-link"><a data-toggle="tab" id="tabProfessor" href="#tab-professores"> Professores (<%= @professores.count %>) </a></li>
+              
+            </ul>
+            <div class="tab-content">
+              <div id="tab-alunos" class="tab-pane fade show active">
+                <div class="panel-body">
+                  <table class="table table-striped table-bordered table-hover table-user-alunos">
+                    <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>RA</th>
+                        <th>Email</th>
+                        <th>Celular</th>
+                        <th>Instituição</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @alunos.each do |user| %>
+                          <tr>
+                            <td><%= user.nome %></td>
+                            <td><%= user.ra %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.celular %></td>
+                            <td><%= user.escola.nome %></td>
+                            <td><%= link_to edit_user_path(user), { class: 'btn btn-sm btn-default btn-table', title: 'Editar', 'data-toggle' => 'tooltip', 'data-placement' => 'right' } do %>
+                                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                              <% end %></td>
+                          </tr>
+                      <% end %>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              <div id="tab-professores" class="tab-pane fade">
+                <div class="panel-body">
+                  <table class="table table-striped table-bordered table-hover table-user-professores">
+                    <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>RA</th>
+                        <th>Email</th>
+                        <th>Celular</th>
+                        <th>Instituição</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @professores.each do |user| %>
+                          <tr>
+                            <td><%= user.nome %></td>
+                            <td><%= user.ra %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.celular %></td>
+                            <td><%= user.escola.nome %></td>
+                            <td><%= link_to edit_user_path(user), { class: 'btn btn-sm btn-default btn-table', title: 'Editar', 'data-toggle' => 'tooltip', 'data-placement' => 'right' } do %>
+                                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                              <% end %></td>
+                          </tr>
+                      <% end %>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-            });
-            $('.table-users-inativos').DataTable({
-                pageLength: 10,
-                rowReorder: {
-                    selector: 'td:nth-child(2)'
-                },
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                "ordering": true,
-                buttons: [
-                    {extend: 'excel', title: 'Usuários'},
-                    {extend: 'pdf', title: 'Usuários'}
-                ],
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
-                }
+<script>
+  $(document).ready(function() {
+    
+    $('.table--user-alunos').DataTable({
+      pageLength: 10,
+      responsive: true,
+      dom: '<"html5buttons"B>lTfgitp',
+      buttons: [
+          {extend: 'excel', title: 'Alunos'},
+          {extend: 'pdf', title: 'Alunos'}
+      ],
+      "ordering": true,
+      "language": {
+          "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+      }
+    });
 
-            });
-        });
-    </script>
-<% end %>
--->
+    $('.table--user-professores').DataTable({
+      pageLength: 10,
+      responsive: true,
+      dom: '<"html5buttons"B>lTfgitp',
+      buttons: [
+          {extend: 'excel', title: 'Professores'},
+          {extend: 'pdf', title: 'Professores'}
+      ],
+      "ordering": true,
+      "language": {
+          "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+      }
+    });
+    
+    
+  });
+</script>

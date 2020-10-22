@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :disciplinas do
+    collection do
+      get 'find_professor'
+      post 'nova_disciplina'
+    end
+  end
+
   resources :escolas do
     collection do
       get 'nova_escola'

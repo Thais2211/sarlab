@@ -1,0 +1,40 @@
+<div class="modal fade" id="modalNewDisciplina" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog w-700">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" > Nova disciplina </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--<form class="form-horizontal" id="form_disciplina"> -->
+      <%= form_tag('/disciplinas/nova_disciplina', method: :post, id: 'form-disciplina') do %>
+        <div class="modal-body">
+          <p id="notice"><%= notice %></p>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <%= label_tag 'Nome', nil %>
+              <%= text_field_tag :nome, nil, class: 'form-control form-control' %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <%= label_tag 'Instituição', nil %>
+              <%= select_tag 'escola_id', options_for_select(Escola.all.order(:nome).collect {|p| [p.nome, p.id]}), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione uma instituição'}, :include_blank => true} %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <%= label_tag 'Professor', nil %>
+              <%= select_tag 'professor_id', options_for_select([]), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um professor'}, :include_blank => true} %>
+            </div>
+          </div>          
+        </div>  
+        <div class="modal-footer">            
+          <%= submit_tag 'Salvar', :id => 'btn_create_disciplina', :class => 'btn btn-primary'%>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div> 
