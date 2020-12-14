@@ -32,7 +32,7 @@ function create_escola()
         /*if($('#form_agendamento #comentario').val() != ''){
               salvarComentario($('#form_agendamento #comentario').val(), data['id']);
         }*/
-        //exibirMsg("Agenda salva com sucesso.");
+        exibirMsg("Agenda salva com sucesso.");
     },error: function(data) {
       console.log('errors');
         /*if (data['responseJSON'] == 'CONFLITO_HORARIO') {
@@ -79,7 +79,7 @@ function editar_escola()
     success: function (data) {
         $('#modalEditEscola').modal('hide');
         console.log("salvou");
-        toastInfo();
+        exibirMsg('escola editada');
     }
   });
 }
