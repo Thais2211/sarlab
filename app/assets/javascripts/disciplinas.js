@@ -2,13 +2,20 @@
 // All this logic will automatically be available in application.js.
 
 
-//= require jquery/dist/jquery
-//= require jquery-easing/jquery.easing.1.3
-//= require datatables
+
+//= require jquery-validation/dist/jquery.validate
 
 $(document).ready(function(){
   $('#btn_nova_disciplina').click(function () {
     $('#modalNewDisciplina').modal('show');
+  });
+
+  $('#btn_create_disciplina').click(function () {
+    create_disciplina();
+  });
+
+  $('#btn_editar_disciplina').click(function () {
+    editar_disciplina();
   });
 
   $('#escola_id').on('change', function(){
@@ -24,7 +31,6 @@ $(document).ready(function(){
             });
             $('#professor_id').trigger("chosen:updated");
         },error: function(data){
-          console.log('erro buscar professor')
             //exibirErro(data);
         }
       });
@@ -39,3 +45,44 @@ $(document).ready(function(){
     }
   });
 })
+
+function open_modal_edit_disciplina(id)
+{
+  //pegar dados
+  $.getJSON("/disciplinas/get_disciplina?id=" + id, function( data ) {
+    console.log(data);
+    $('#modalEditDisciplina #escola_id').val(data['escola_id']).trigger("chosen:updated");
+    $('#modalEditDisciplina #nome').val(data['nome']);
+    //add ao dropdown somente professores dessa instituição
+    $.ajax({
+      url: '/disciplinas/find_professor?escola=' + $('#modalEditDisciplina #escola_id').val(),
+      type: 'GET',
+      success: function (data_prof) {
+          $.each(data_prof, function (k, v) {
+              $('#modalEditDisciplina #professor_id_edit').append('<option value="' + v['id'] + '">'+ v['nome'] +'</option>');
+          });
+          $('#modalEditDisciplina #professor_id_edit').val(data['professor_id']).trigger("chosen:updated");
+      },error: function(data_prof){
+        console.log('erro buscar professor editar disciplina')
+          //exibirErro(data);
+      }
+    });
+  });
+
+  $('#modalEditDisciplina').modal('show');
+}
+
+function editar_disciplina()
+{
+  $.ajax({
+    url: '/escolas/atualizar_disciplina/',
+    data: {escola_id: $('#modalEditDisciplina #escola_id').val(),
+            nome: $('#modalEditDisciplina #nome').val(),
+            professor_id: $('#modalEditDisciplina #professor_id_edit').val()},
+    type: 'GET',
+    success: function (data) {
+        $('#modalEditDisciplina').modal('hide');
+        console.log("salvou");
+    }
+  });
+}

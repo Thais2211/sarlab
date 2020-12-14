@@ -28,6 +28,9 @@ module Reservas
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+    config.time_zone = 'Brasilia'
+    config.active_record.default_timezone = :local
+    config.active_record.time_zone_aware_attributes = false
 
     config.generators.system_tests = nil
     config.generators.javascript_engine = :js

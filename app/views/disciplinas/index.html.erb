@@ -39,7 +39,7 @@
                   <td><%= disciplina.nome %></td>
                   <td><%= disciplina.escola.nome %></td>
                   <td><%= disciplina.professor.nome %></td>
-                  <td><button class="btn btn-primary btn-sm" onclick="open_modal_edit_escola(<%= disciplina.id %>)">Editar</button></td>                  
+                  <td><button class="btn btn-primary btn-sm" onclick="open_modal_edit_disciplina(<%= disciplina.id %>)">Editar</button></td>                  
                 </tr>
               <% end %>
             </tbody>
@@ -51,6 +51,22 @@
   <%= render 'disciplinas/modal_new_disciplina' %>
   <%= render 'disciplinas/modal_edit_disciplina' %>
 </div>
-
-
-<%= link_to 'New Disciplina', new_disciplina_path %>
+<script>
+  $(document).ready(function() {
+    
+    $('.table-disciplinas').DataTable({
+      pageLength: 10,
+      responsive: true,
+      dom: '<"html5buttons"B>lTfgitp',
+      buttons: [
+          {extend: 'excel', title: 'Disciplinas'},
+          {extend: 'pdf', title: 'Disciplinas'}
+      ],
+      "ordering": true,
+      "language": {
+          "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+      }
+    });
+    
+  });
+</script>

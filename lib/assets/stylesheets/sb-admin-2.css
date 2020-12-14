@@ -10874,6 +10874,12 @@ form.user .btn-user {
 }
 
 .error {
+  color: #fc0303;
+  position: relative;
+  line-height: 1;
+}
+
+.error2 {
   color: #5a5c69;
   font-size: 7rem;
   position: relative;

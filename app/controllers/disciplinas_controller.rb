@@ -88,6 +88,20 @@ class DisciplinasController < ApplicationController
     render json: professores
   end
 
+  def get_disciplina
+    disciplina = Disciplina.find(params[:id])
+
+    render json: disciplina
+  end
+
+  def atualizar_disciplina
+    byebug
+    disciplina.update(nome: params[:nome], escola_id: params[:escola_id], professor_id: params[:professor_id]);
+    disciplina.save!
+
+    render json: disciplina
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_disciplina

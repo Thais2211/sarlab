@@ -1,54 +1,35 @@
-<div class="modal fade" id="modalEditEscola" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalEditDisciplina" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog w-700"]>
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" > Escola </h5>
+        <h5 class="modal-title" > Disciplina </h5>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <form class="form-horizontal" id="form_edit_escola">
+      <form class="form-horizontal" id="form_disciplina">
         <div class="modal-body">
           <div class="form-group row">
             <div class="col-sm-12">
-              <%= label_tag 'Instituição', nil %>
+              <%= label_tag 'Nome', nil %>
               <%= text_field_tag :nome, nil, class: 'form-control form-control' %>
-              <%= hidden_field_tag 'escola_id', nil, class: 'form-control input-sm' %>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-sm-6">
-              <%= label_tag 'Endereço', nil %>
-              <%= text_field_tag :endereco, nil, class: 'form-control form-control' %>
-            </div>
-            <div class="col-sm-6">
-              <%= label_tag 'Número', nil %>
-              <%= text_field_tag :numero, nil, class: 'form-control form-control' %>
+            <div class="col-sm-12">
+              <%= label_tag 'Instituição', nil %>
+              <%= select_tag 'escola_id', options_for_select(Escola.all.order(:nome).collect {|p| [p.nome, p.id]}), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione uma instituição'}} %>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-sm-6">
-              <%= label_tag 'Bairro', nil %>
-              <%= text_field_tag :bairro, nil, class: 'form-control form-control' %>
-            </div>
-            <div class="col-sm-6">
-              <%= label_tag 'Cidade', nil %>
-              <%= text_field_tag :cidade, nil, class: 'form-control form-control' %>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-6">
-              <%= label_tag 'Responsável', nil %>
-              <%= text_field_tag :responsavel, nil, class: 'form-control form-control' %>
-            </div>
-            <div class="col-sm-6">
-              <%= label_tag 'Telefone', nil %>
-              <%= text_field_tag :telefone, nil, class: 'form-control form-control', :id=> 'telefone' %>
+            <div class="col-sm-12">
+              <%= label_tag 'Professor', nil %>
+              <%= select_tag 'professor_id_edit', options_for_select([]), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um professor'}} %>
             </div>
           </div>
         </div>
         <div class="modal-footer">            
-          <%= submit_tag 'Salvar', :id => 'btn_editar_escola', :class => 'btn btn-primary'%>
+          <%= submit_tag 'Salvar', :id => 'btn_editar_disciplina', :class => 'btn btn-primary'%>
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
         </div>
       </form>
