@@ -18,31 +18,35 @@
 //= require jquery-easing/jquery.easing.1.3
 //= require datatables
 //= require sb-admin-2
+//= require toastr/toastr
 
 
-function toastInfo()
-{
-  $('#toast-place').append(`
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
-      <div class="toast-header">
-        <img src="..." class="rounded mr-2" alt="...">
-        <strong class="mr-auto">Bootstrap</strong>
-        <small>11 mins ago</small>
-        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="toast-body">
-        Hello, world! This is a toast message.
-      </div>
-    </div>
-  `);
-  //exibir toast
-  $('.toast').toast('show');
-  console.log('show toast');
+function exibirErro(msgErro) {
+  toastr.options = {
+      closeButton: true,
+      showMethod: 'slideDown',
+      showDuration: "300",
+  };
+  toastr.error(msgErro);
+}
 
-  //remover o Toast
-  $('.toast').on('hidden.bs.toast', e => { $(e.currentTarget).remove();
-    console.log('removeu toast');
-  })
+function exibirMsg(msg){
+  toastr.options = {
+    closeButton: true,
+    showMethod: 'slideDown',
+    showDuration: "3000",
+    hideDuration: "1000",
+    timeOut: "5000",
+    extendedTimeOut: "1000",
+    positionClass: "toast-bottom-right",
+  };
+  toastr.success(msg);
+}
+
+function exibirWarning(msg){
+  toastr.options = {
+      closeButton: true,
+      showMethod: 'slideDown'
+  };
+  toastr.warning(msg);
 }
