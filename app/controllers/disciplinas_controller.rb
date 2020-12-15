@@ -1,5 +1,5 @@
 class DisciplinasController < ApplicationController
-  before_action :set_disciplina, only: [:show, :edit, :update, :destroy]
+  before_action :set_disciplina, only: [:show, :edit, :update, :destroy, :atualizar_disciplina]
 
   # GET /disciplinas
   # GET /disciplinas.json
@@ -65,22 +65,12 @@ class DisciplinasController < ApplicationController
   def nova_disciplina
     @disciplina = Disciplina.new(nome: params[:nome], escola_id: params[:escola_id], professor_id: params[:professor_id])
     @disciplina.save!
-
+    #flash[:notice] = "You cannot access this page."
+    
     redirect_to disciplinas_path, notice:'Disciplina cadastrada com sucesso'
-    # respond_to do |format|
-    #   if @disciplina.save
-    #     @disciplinas = Disciplina.all
-    #     format.html { render 'index' , notice: 'Disciplina cadastrada com sucesso' }
-    #     format.json { render :index }
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @disciplina.errors, status: :unprocessable_entity }
-    #   end
-    # end
 
     #render json: @disciplina
   end
-
 
   def find_professor
     professores = User.where(role_id: 2, ativo: true, escola_id: params[:escola])
@@ -96,9 +86,8 @@ class DisciplinasController < ApplicationController
 
   def atualizar_disciplina
     byebug
-    disciplina.update(nome: params[:nome], escola_id: params[:escola_id], professor_id: params[:professor_id]);
-    disciplina.save!
-
+    @disciplina.update(nome: params[:nome], escola_id: params[:escola_id], professor_id: params[:professor_id]);
+   
     render json: disciplina
   end
 

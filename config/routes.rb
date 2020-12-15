@@ -4,8 +4,10 @@ Rails.application.routes.draw do
     collection do
       get 'find_professor'
       post 'nova_disciplina'
-      get 'get_disciplina'
-      get 'atualizar_disciplina'
+      get 'get_disciplina'      
+    end
+    member do
+      put 'atualizar_disciplina'
     end
   end
 

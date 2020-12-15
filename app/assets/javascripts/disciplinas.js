@@ -1,17 +1,10 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
-
-
-
 //= require jquery-validation/dist/jquery.validate
 
 $(document).ready(function(){
   $('#btn_nova_disciplina').click(function () {
     $('#modalNewDisciplina').modal('show');
-  });
-
-  $('#btn_create_disciplina').click(function () {
-    create_disciplina();
   });
 
   $('#btn_editar_disciplina').click(function () {
@@ -51,6 +44,7 @@ function open_modal_edit_disciplina(id)
   //pegar dados
   $.getJSON("/disciplinas/get_disciplina?id=" + id, function( data ) {
     console.log(data);
+    $('#modalEditDisciplina #id').val(data['id']);
     $('#modalEditDisciplina #escola_id').val(data['escola_id']).trigger("chosen:updated");
     $('#modalEditDisciplina #nome').val(data['nome']);
     //add ao dropdown somente professores dessa instituição
@@ -74,15 +68,16 @@ function open_modal_edit_disciplina(id)
 
 function editar_disciplina()
 {
-  $.ajax({
-    url: '/escolas/atualizar_disciplina/',
+  console.log('editar');
+  $.ajax({    
+    url: '/disciplinas/' + $('#modalEditDisciplina #id').val() + '/atualizar_disciplina/',
     data: {escola_id: $('#modalEditDisciplina #escola_id').val(),
             nome: $('#modalEditDisciplina #nome').val(),
             professor_id: $('#modalEditDisciplina #professor_id_edit').val()},
-    type: 'GET',
+    type: 'PUT',
     success: function (data) {
         $('#modalEditDisciplina').modal('hide');
-        console.log("salvou");
+        exibirMsg("Cadastro atualizado com sucesso");
     }
   });
 }
