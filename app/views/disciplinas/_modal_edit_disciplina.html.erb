@@ -7,7 +7,7 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <form class="form-horizontal" id="form_disciplina">
+      <%= form_tag('/disciplinas/atualizar_disciplina', method: :post, id: 'form-disciplina') do %>
         <div class="modal-body">
           <div class="form-group row">
             <div class="col-sm-12">
@@ -25,15 +25,15 @@
           <div class="form-group row">
             <div class="col-sm-12">
               <%= label_tag 'Professor', nil %>
-              <%= select_tag 'professor_id_edit', options_for_select([]), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um professor'}} %>
+              <%= select_tag 'professor_id', options_for_select([]), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um professor'}} %>
             </div>
           </div>
         </div>
         <div class="modal-footer">            
-          <%= submit_tag 'Salvar', :id => 'btn_editar_disciplina', :class => 'btn btn-primary'%>
+          <%= submit_tag 'Salvar', :class => 'btn btn-primary'%>
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
         </div>
-      </form>
+      <% end %>
     </div>
   </div>
 </div> 

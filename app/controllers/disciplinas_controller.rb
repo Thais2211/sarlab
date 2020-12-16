@@ -65,11 +65,8 @@ class DisciplinasController < ApplicationController
   def nova_disciplina
     @disciplina = Disciplina.new(nome: params[:nome], escola_id: params[:escola_id], professor_id: params[:professor_id])
     @disciplina.save!
-    #flash[:notice] = "You cannot access this page."
-    
-    redirect_to disciplinas_path, notice:'Disciplina cadastrada com sucesso'
 
-    #render json: @disciplina
+    redirect_to disciplinas_path, notice:'Disciplina cadastrada com sucesso'
   end
 
   def find_professor
@@ -85,10 +82,10 @@ class DisciplinasController < ApplicationController
   end
 
   def atualizar_disciplina
-    byebug
+    @disciplina = Disciplina.find params[:id]
     @disciplina.update(nome: params[:nome], escola_id: params[:escola_id], professor_id: params[:professor_id]);
-   
-    render json: disciplina
+
+    redirect_to disciplinas_path, notice:'Disciplina atualizada com sucesso'
   end
 
   private

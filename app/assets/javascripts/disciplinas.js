@@ -7,10 +7,6 @@ $(document).ready(function(){
     $('#modalNewDisciplina').modal('show');
   });
 
-  $('#btn_editar_disciplina').click(function () {
-    editar_disciplina();
-  });
-
   $('#escola_id').on('change', function(){
     $('#professor_id').html('');
     if($('#escola_id').val() != null && $('#escola_id').val() != ""){
@@ -41,43 +37,30 @@ $(document).ready(function(){
 
 function open_modal_edit_disciplina(id)
 {
+  console.log('open modal edit');
   //pegar dados
   $.getJSON("/disciplinas/get_disciplina?id=" + id, function( data ) {
     console.log(data);
     $('#modalEditDisciplina #id').val(data['id']);
     $('#modalEditDisciplina #escola_id').val(data['escola_id']).trigger("chosen:updated");
     $('#modalEditDisciplina #nome').val(data['nome']);
+    $('#modalEditDisciplina #professor_id').empty();
     //add ao dropdown somente professores dessa instituição
     $.ajax({
       url: '/disciplinas/find_professor?escola=' + $('#modalEditDisciplina #escola_id').val(),
       type: 'GET',
       success: function (data_prof) {
           $.each(data_prof, function (k, v) {
-              $('#modalEditDisciplina #professor_id_edit').append('<option value="' + v['id'] + '">'+ v['nome'] +'</option>');
+              $('#modalEditDisciplina #professor_id').append('<option value="' + v['id'] + '">'+ v['nome'] +'</option>');
           });
-          $('#modalEditDisciplina #professor_id_edit').val(data['professor_id']).trigger("chosen:updated");
+          $('#modalEditDisciplina #professor_id').val(data['professor_id']).trigger("chosen:updated");
+          exibirMsg("profs add");
       },error: function(data_prof){
         console.log('erro buscar professor editar disciplina')
-          //exibirErro(data);
+          exibirErro(data_prof);
       }
     });
   });
 
   $('#modalEditDisciplina').modal('show');
-}
-
-function editar_disciplina()
-{
-  console.log('editar');
-  $.ajax({    
-    url: '/disciplinas/' + $('#modalEditDisciplina #id').val() + '/atualizar_disciplina/',
-    data: {escola_id: $('#modalEditDisciplina #escola_id').val(),
-            nome: $('#modalEditDisciplina #nome').val(),
-            professor_id: $('#modalEditDisciplina #professor_id_edit').val()},
-    type: 'PUT',
-    success: function (data) {
-        $('#modalEditDisciplina').modal('hide');
-        exibirMsg("Cadastro atualizado com sucesso");
-    }
-  });
 }
