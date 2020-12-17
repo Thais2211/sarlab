@@ -1,11 +1,13 @@
 class UsersController < ApplicationController
   #skip_before_action :verify_authenticity_token
   #before_filter :authorize_admin, only: [:create, :new, :edit, :index]
-  before_action :set_usuario, only: [:edit, :update, :destroy, :editar_usuario, :alterar_senha]
+  before_action :set_usuario, only: [:edit, :update, :destroy, :editar_usuario, :alterar_senha, :toggle_user,
+                :alter_permission]
 
   def index
     @alunos = User.where(ativo: true, role_id: 3)
     @professores = User.where(ativo: true, role_id: 2)
+    @admins = User.where(ativo: true, role_id: 1)
     @inativos = User.where(ativo: false)
   end
 
@@ -44,6 +46,19 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def toggle_user
+    @user.ativo = !@user.ativo
+    @user.save
+
+    redirect_to users_path, notice:'Usúario atualizado com sucesso.'
+  end
+
+  def alter_permission
+    @user.role_id = params[:role_id]
+    @user.save
+    redirect_to users_path, notice:'Usúario atualizado com sucesso.'
   end
 
   private
