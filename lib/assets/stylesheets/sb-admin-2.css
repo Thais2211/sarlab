@@ -4516,7 +4516,7 @@ input[type="button"].btn-block {
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: #f8f9fc;
+  background-color: #4e73df;
   border-bottom: 1px solid #e3e6f0;
 }
 
@@ -7622,9 +7622,12 @@ button.bg-dark:focus {
   margin-top: 0.25rem !important;
 }
 
-.mr-1,
 .mx-1 {
   margin-right: 0.25rem !important;
+}
+
+.mr-1 {
+  margin-right: 1rem !important;
 }
 
 .mb-1,
@@ -7632,7 +7635,10 @@ button.bg-dark:focus {
   margin-bottom: 0.25rem !important;
 }
 
-.ml-1,
+.ml-1 {
+  margin-left: 1rem !important;
+}
+
 .mx-1 {
   margin-left: 0.25rem !important;
 }

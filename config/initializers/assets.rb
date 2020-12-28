@@ -13,3 +13,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 Rails.application.config.assets.precompile += %w( escolas.js)
 Rails.application.config.assets.precompile += %w( disciplinas.js )
+Rails.application.config.assets.precompile += %w( laboratorys.js )

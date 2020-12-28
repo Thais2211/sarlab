@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :laboratorys do
+    collection do
+      post 'new_laboratory'  
+    end
+  end
+  
   resources :disciplinas do
     collection do
       get 'find_professor'
