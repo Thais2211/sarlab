@@ -26,44 +26,23 @@
       </div>
     </div>
     <div class="row mr-1 ml-1">
-      <div class="col-lg-6">
-        <!-- Default Card Example -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-white">Basic Card Example</h6>
-            </div>
-            <div class="card-body">
-                This card uses Bootstrap's default styling with no utility classes added. Global
-                styles are the only things modifying the look and feel of this default card example.
-            </div>
+      <% @laboratorys.each do |lab| %>
+        <div class="col-lg-6">
+          <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="m-0 font-weight-bold text-white"><%= lab.name %></h5>
+              </div>
+              <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted"><%= lab.local %></h6>
+                <p class="card-text"><%= lab.description %></p>
+                <hr>
+                <button class="btn btn-primary btn-sm" onclick="open_modal_edit_lab(<%= lab.id %>)">Editar</button>
+              </div>
+          </div>
         </div>
-      </div>
-      <div class="col-lg-6">
-        <!-- Default Card Example -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-white">Basic Card Example</h6>
-            </div>
-            <div class="card-body">
-                This card uses Bootstrap's default styling with no utility classes added. Global
-                styles are the only things modifying the look and feel of this default card example.
-            </div>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <!-- Default Card Example -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-white">Basic Card Example</h6>
-            </div>
-            <div class="card-body">
-                This card uses Bootstrap's default styling with no utility classes added. Global
-                styles are the only things modifying the look and feel of this default card example.
-            </div>
-        </div>
-      </div>
+      <% end %>
     </div>
   </div>
   <%= render 'laboratorys/modal_new_laboratory' %>
-  <%= render 'disciplinas/modal_edit_disciplina' %>
+  <%= render 'laboratorys/modal_edit_laboratory' %>
 </div>

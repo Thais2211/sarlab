@@ -9598,7 +9598,8 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .text-muted {
-  color: #858796 !important;
+  color: #0c0ca8 !important;
+  font-style: italic;
 }
 
 .text-black-50 {

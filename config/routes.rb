@@ -2,7 +2,9 @@ Rails.application.routes.draw do
 
   resources :laboratorys do
     collection do
-      post 'new_laboratory'  
+      post 'new_laboratory'
+      post 'edit_laboratory'
+      get 'get_laboratory'  
     end
   end
   
