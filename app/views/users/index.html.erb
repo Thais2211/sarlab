@@ -19,10 +19,10 @@
         <div class="p-3">
           <div class="tabs-container">
             <ul class="nav nav-tabs">
-              <li class="nav-item nav-link active"><a data-toggle="tab" href="#tab-alunos"> Alunos (<%= @alunos.count %>)</a></li>
-              <li class="nav-item nav-link"><a data-toggle="tab" href="#tab-professores"> Professores (<%= @professores.count %>) </a></li>
-              <li class="nav-item nav-link"><a data-toggle="tab" href="#tab-admins"> Administradores (<%= @admins.count %>) </a></li>
-              <li class="nav-item nav-link"><a data-toggle="tab" href="#tab-inativos"> Desativados (<%= @inativos.count %>) </a></li>
+              <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab-alunos"> Alunos (<%= @alunos.count %>)</a></li>
+              <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab-professores"> Professores (<%= @professores.count %>) </a></li>
+              <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab-admins"> Administradores (<%= @admins.count %>) </a></li>
+              <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab-inativos"> Desativados (<%= @inativos.count %>) </a></li>
             </ul>
             <div class="tab-content">
               <div id="tab-alunos" class="tab-pane active">
