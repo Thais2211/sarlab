@@ -1,0 +1,55 @@
+<div class="card o-hidden border-0 shadow-lg my-3">
+  <div class="card-body">
+    <div class="form-group row">
+      <%= label_tag 'Nome', 'Nome', class: 'col-2 control-label padding'  %>
+      <div class="col-sm-10">        
+        <%= text_field_tag :name, @equipament.name, class: 'form-control form-control', readOnly: "true" %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= label_tag 'description', 'Descrição', class: 'col-2 control-label padding'  %>
+      <div class="col-sm-10">        
+        <%= text_area_tag :description, @equipament.description, rows: 2, class: 'form-control form-control', readOnly: "true" %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= label_tag 'brand', 'Marca', class: 'col-2 control-label padding'  %>
+      <div class="col-sm-4">        
+        <%= text_field_tag :brand, @equipament.brand, class: 'form-control form-control', readOnly: "true" %>
+      </div>
+
+      <%= label_tag 'model', 'Modelo', class: 'col-2 control-label padding'  %>
+      <div class="col-sm-4">        
+        <%= text_field_tag :model, @equipament.model, class: 'form-control form-control', readOnly: "true" %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= label_tag 'capacity', 'Capacidade', class: 'col-2 control-label padding'  %>
+      <div class="col-sm-4">        
+        <%= text_field_tag :capacity, @equipament.capacity, class: 'form-control form-control', readOnly: "true" %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= label_tag 'patrimony', 'Patrimônio', class: 'col-2 control-label padding'  %>
+      <div class="col-sm-4">        
+        <%= text_field_tag :patrimony, @equipament.patrimony, class: 'form-control form-control', readOnly: "true" %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= label_tag 'simultaneous_use', 'Uso simultâneo', class: 'col-3 control-label padding'  %>
+      <div class="col-sm-3">        
+        <%= number_field_tag :simultaneous_use, @equipament.simultaneous_use, class: 'form-control form-control', readOnly: "true" %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= label_tag 'laboratory', 'Laboratório', class: 'col-2 control-label padding'  %>
+      <div class="col-sm-4">        
+        <%= text_field_tag :laboratory, @equipament.laboratory.name, class: 'form-control form-control', readOnly: "true" %>
+      </div>
+    </div>
+    <div class="actions">
+      <%= link_to 'Editar', edit_equipament_path(@equipament), :class => 'btn btn-primary' %>
+      <%= link_to 'Voltar', equipaments_path, :class => 'btn btn-secondary' %>
+    </div>
+  </div>
+</div>

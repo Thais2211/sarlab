@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :equipaments
   resources :laboratorys do
     collection do
       post 'new_laboratory'

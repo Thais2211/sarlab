@@ -8,7 +8,7 @@ class LaboratorysController < ApplicationController
   end
 
   def new_laboratory
-    @laboratory = Laboratory.new(name: params[:name], description: params[:description], escola_id: 2, local: params[:local])
+    @laboratory = Laboratory.new(name: params[:name], description: params[:description], escola_id: 1, local: params[:local])
     @laboratory.save!
 
     redirect_to laboratorys_path, notice:'Laboratório cadastrado com sucesso'
@@ -22,7 +22,7 @@ class LaboratorysController < ApplicationController
 
   def edit_laboratory
     @laboratory = Laboratory.find params[:id]
-    @laboratory = Laboratory.update(name: params[:name], description: params[:description], local: params[:local])
+    @laboratory.update(name: params[:name], description: params[:description], local: params[:local])
 
     redirect_to laboratorys_path, notice:'Laboratório atualizado com sucesso'
   end

@@ -4520,6 +4520,12 @@ input[type="button"].btn-block {
   border-bottom: 1px solid #e3e6f0;
 }
 
+.card-header-nopadding {
+  margin-bottom: 0;
+  background-color: #4e73df;
+  border-bottom: 1px solid #e3e6f0;
+}
+
 .card-header:first-child {
   border-radius: calc(0.35rem - 1px) calc(0.35rem - 1px) 0 0;
 }

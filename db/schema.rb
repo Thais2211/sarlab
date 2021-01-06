@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_113855) do
+ActiveRecord::Schema.define(version: 2021_01_04_224802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,20 @@ ActiveRecord::Schema.define(version: 2020_12_29_113855) do
     t.datetime "updated_at", null: false
     t.index ["escola_id"], name: "index_disciplinas_on_escola_id"
     t.index ["professor_id"], name: "index_disciplinas_on_professor_id"
+  end
+
+  create_table "equipaments", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "brand"
+    t.string "model"
+    t.string "capacity"
+    t.string "patrimony"
+    t.bigint "laboratory_id"
+    t.integer "simultaneous_use"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["laboratory_id"], name: "index_equipaments_on_laboratory_id"
   end
 
   create_table "escolas", force: :cascade do |t|
@@ -79,6 +93,7 @@ ActiveRecord::Schema.define(version: 2020_12_29_113855) do
 
   add_foreign_key "disciplinas", "escolas"
   add_foreign_key "disciplinas", "users", column: "professor_id"
+  add_foreign_key "equipaments", "laboratorys"
   add_foreign_key "laboratorys", "escolas"
   add_foreign_key "users", "escolas"
   add_foreign_key "users", "roles"
