@@ -1,4 +1,5 @@
 class DisciplinasController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_disciplina, only: [:show, :edit, :update, :destroy, :atualizar_disciplina]
 
   # GET /disciplinas
@@ -24,7 +25,6 @@ class DisciplinasController < ApplicationController
   # POST /disciplinas
   # POST /disciplinas.json
   def create
-    byebug
     @disciplina = Disciplina.new(disciplina_params)
 
     respond_to do |format|

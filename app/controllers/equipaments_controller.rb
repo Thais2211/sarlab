@@ -1,10 +1,14 @@
 class EquipamentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_equipament, only: [:show, :edit, :update, :destroy]
 
   # GET /equipaments
   # GET /equipaments.json
   def index
-    @equipaments = Equipament.all
+    @q = Equipament.ransack(params[:q])
+    @equipaments = @q.result
+    
+    #@equipaments = Equipament.all    
   end
 
   # GET /equipaments/1
@@ -59,6 +63,11 @@ class EquipamentsController < ApplicationController
       format.html { redirect_to equipaments_url, notice: 'Equipament was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def equipaments_labs
+    @equipaments = Equipament.where(laboratory_id: params[:lab])
+    render :index
   end
 
   private

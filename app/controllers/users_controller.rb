@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   #skip_before_action :verify_authenticity_token
   #before_filter :authorize_admin, only: [:create, :new, :edit, :index]
   before_action :set_usuario, only: [:edit, :update, :destroy, :editar_usuario, :alterar_senha, :toggle_user,
@@ -36,7 +37,6 @@ class UsersController < ApplicationController
 
   #put
   def update
-    byebug
     respond_to do |format|
       if @user.update(user_update_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -59,6 +59,17 @@ class UsersController < ApplicationController
     @user.role_id = params[:role_id]
     @user.save
     redirect_to users_path, notice:'Usúario atualizado com sucesso.'
+  end
+
+  def alter_password
+    usuario = current_user
+
+    if !usuario.valid_password? params[:password_atual]
+      redirect_to root_path, error:'Senha inválida!'
+    else
+      usuario.update(password: params[:new_password], password_confirmation: params[:confirm_password])
+      redirect_to root_path, notice:"Senha alterada com sucesso."
+    end
   end
 
   private

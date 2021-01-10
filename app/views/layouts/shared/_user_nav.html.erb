@@ -1,18 +1,16 @@
 <li class="nav-item dropdown no-arrow">
   <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%= current_user.present? ? current_user.nome : 'usuário' %></span>
-    <img class="img-profile rounded-circle" src="user_azul.jpg">
+    <img class="img-profile rounded-circle" src="https://user-images.githubusercontent.com/44842616/104138186-4517b400-5381-11eb-9dfb-050f9d823ddf.png">
   </a>
               <!-- Dropdown - User Information -->
-    <ul class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-      <li><a class="dropdown-item" href="#">
-        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-        </a>
-      </li>
+    <ul class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">      
       <li><%= link_to edit_user_path(current_user.id), :class => "dropdown-item" do %>
         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>Perfil
         <% end %>
+      </li>
+      <li><a class="dropdown-item" id="btn_alter_password">
+        <i class="fas fa-lock fa-sm fa-fw mr-2 text-gray-400"></i>Alterar senha</a>
       </li>
       <li><%= link_to destroy_user_session_path, method: :delete, :class => "dropdown-item" do %>
         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Sair
@@ -20,3 +18,9 @@
       </li>
     </ul>
 </li>
+
+<script>
+  $('#btn_alter_password').click(function () {
+    $('#modalAlterPassword').modal('show');
+  });
+</script>

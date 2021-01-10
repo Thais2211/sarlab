@@ -1,4 +1,5 @@
 class LaboratorysController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_laboratory, only: [:show, :edit, :update, :destroy]
 
   # GET /laboratorys

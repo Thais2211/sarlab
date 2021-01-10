@@ -1,4 +1,5 @@
 class EscolasController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_escola, only: [:show, :edit, :update, :destroy, :atualizar_escola]
 
   # GET /escolas

@@ -12,6 +12,33 @@
   </div>
 </div>
 
+<div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#FilterEquipament" class="d-block card-header py-3 collapsed" data-toggle="collapse"
+        role="button" aria-expanded="false" aria-controls="FilterEquipament" style="background-color: white;">
+        <h6 class="m-0 font-weight-bold text-primary">Filtro</h6>
+    </a>
+    <!-- Card Content - Collapse -->
+    <div class="collapse" id="FilterEquipament">
+        <div class="card-body">
+          <%= search_form_for @q do |f| %>
+            <div class="form-group row">
+              <div class="col-sm-6">
+                <%= f.label :laboratory_id_eq, 'Laboratório'  %>
+                <%= f.collection_select :laboratory_id_eq, Laboratory.all.order(:name), :id, :name, {include_blank: true}, {class: "h-38"} %>
+              </div>         
+              <div class="col-sm-6">
+                <%= f.label :name_cont, 'Nome equipamento'  %>
+                <%= f.text_field :name_cont, class: 'form-control form-control' %>
+              </div>
+            </div>
+
+            <%= f.submit :class => 'btn btn-primary' %>
+          <% end %>
+        </div>
+    </div>
+</div>
+
 <div class="card o-hidden border-0 shadow-lg my-3">
   <div class="card-body p-0">
     <div class="row">
@@ -24,18 +51,11 @@
             <%= link_to new_equipament_path, :class => "ml-1 d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
               <i class="fas fa-plus-square"></i>Novo equipamento
             <% end %>
-            <div class="col-auto">
-              <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">Laboratório</div>
-                </div>
-                <%= select_tag 'lab_id', options_for_select(Laboratory.all.order(:name).collect {|p| [p.name, p.id]}), {:class => "custom-select form-control", :data => {:placeholder => 'Selecione uma instituição'}, :include_blank => true} %>
-              </div>
-            </div>
           </div>          
         </div>
       </div>
     </div>
+
     <div class="row mr-1 ml-1">
       <% @equipaments.each do |eqp| %>
         <div class="col-lg-6">
@@ -55,3 +75,9 @@
       <% end %>
     </div>
   </div>
+
+<style>
+  .h-38{ 
+    height: 38px !important;
+  }
+</style>
