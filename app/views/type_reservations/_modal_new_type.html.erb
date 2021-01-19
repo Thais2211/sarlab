@@ -1,0 +1,26 @@
+<div class="modal fade" id="modalNewType" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog w-500">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" > Novo tipo de reserva </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <%= form_tag('/type_reservations/novo_tipo', method: :post) do %>
+        <div class="modal-body">
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <%= label_tag 'Tipo', nil %>
+              <%= text_field_tag :description, nil, class: 'form-control form-control' %>
+            </div>
+          </div>                 
+        </div>  
+        <div class="modal-footer">            
+          <%= submit_tag 'Salvar', :class => 'btn btn-primary'%>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,2 @@
+class TypeReservation < ApplicationRecord
+end

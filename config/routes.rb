@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
 
+  resources :schedules
+    
+  resources :type_reservations do
+    collection do
+      post 'novo_tipo'
+      post 'atualizar_tipo'
+    end
+  end
+
   resources :equipaments do
     collection do
       get 'equipaments_labs'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_04_224802) do
+ActiveRecord::Schema.define(version: 2021_01_17_190008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,28 @@ ActiveRecord::Schema.define(version: 2021_01_04_224802) do
     t.string "permissao"
   end
 
+  create_table "schedules", force: :cascade do |t|
+    t.datetime "start"
+    t.datetime "end"
+    t.bigint "equipament_id"
+    t.bigint "laboratory_id"
+    t.bigint "user_id"
+    t.string "status"
+    t.bigint "type_reservation_id"
+    t.bigint "admin_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_schedules_on_admin_id"
+    t.index ["equipament_id"], name: "index_schedules_on_equipament_id"
+    t.index ["laboratory_id"], name: "index_schedules_on_laboratory_id"
+    t.index ["type_reservation_id"], name: "index_schedules_on_type_reservation_id"
+    t.index ["user_id"], name: "index_schedules_on_user_id"
+  end
+
+  create_table "type_reservations", force: :cascade do |t|
+    t.string "description"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "nome", null: false
     t.integer "ra"
@@ -95,6 +117,11 @@ ActiveRecord::Schema.define(version: 2021_01_04_224802) do
   add_foreign_key "disciplinas", "users", column: "professor_id"
   add_foreign_key "equipaments", "laboratorys"
   add_foreign_key "laboratorys", "escolas"
+  add_foreign_key "schedules", "equipaments"
+  add_foreign_key "schedules", "laboratorys"
+  add_foreign_key "schedules", "type_reservations", column: "type_reservation_id"
+  add_foreign_key "schedules", "users"
+  add_foreign_key "schedules", "users", column: "admin_id"
   add_foreign_key "users", "escolas"
   add_foreign_key "users", "roles"
 end
