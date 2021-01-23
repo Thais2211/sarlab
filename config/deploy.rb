@@ -3,8 +3,9 @@ lock "~> 3.15.0"
 
 set :application, "reservas"
 #set :repo_url, "git@example.com:me/my_repo.git"
-set :repo_url, "git@github.com:Thais2211/reservas.git"
+#set :repo_url, "git@github.com:Thais2211/reservas.git"
 #set :repo_url, 'https://alisonluisk:alk140088@github.com/germantech/pro-vendas-backend.git'
+set :repo_url, 'https://thais2211:Rebecca1810@github.com/Thais2211/reservas.git'
 
 # Default branch is :master
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
