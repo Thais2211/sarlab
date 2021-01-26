@@ -34,7 +34,6 @@ install_plugin Capistrano::SCM::Git
 # require "capistrano/rails/migrations"
 # require "capistrano/passenger"
 require "capistrano/rails/migrations"
-require "whenever/capistrano"
 
 require 'capistrano/bundler'
 require 'capistrano/rails'

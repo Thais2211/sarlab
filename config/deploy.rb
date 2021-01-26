@@ -24,7 +24,7 @@ set :deploy_to, "/var/www/meriva.td.utfpr.edu.br"
 
 # Default value for :linked_files is []
 #set :linked_files, %w{config/database.yml}
-append :linked_files, "config/database.yml"
+append :linked_files, "config/database.yml", "config/storage.yml", "config/master.key"
 
 # Default value for linked_dirs is []
 #set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
@@ -37,25 +37,11 @@ append :linked_dirs, "bin", "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vend
 # set :local_user, -> { `git config user.name`.chomp }
 
 # Default value for keep_releases is 5
-# set :keep_releases, 5
+set :keep_releases, 5
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
-
-
-namespace :deploy do
-    desc "Update crontab with whenever"
-    task :update_cron do
-      on roles(:app) do
-        within current_path do
-          execute :bundle, :exec, "whenever --update-crontab #{fetch(:application)}"
-        end
-      end
-    end
-  
-    after :finishing, 'deploy:update_cron'
-  end
-  
+ 
   namespace :deploy do
   
     desc 'Restart application'
@@ -68,20 +54,4 @@ namespace :deploy do
     after :publishing, 'deploy:restart'
     after :finishing, 'deploy:cleanup'
   end
-  
-  namespace :deploy do
-    desc "reload the database with seed data"
-    task :restart_sidekiq do
-      on roles(:worker) do
-        execute :service, "sidekiq restart"
-      end
-    end
-    after "deploy:published", "restart_sidekiq"
-  end
-  
-  namespace :deploy do
-    desc "reload the database with seed data"
-    task :seed do
-      run "cd #{current_path}; bundle exec rake db:seed RAILS_ENV=#{rails_env}"
-    end
-  end
+
