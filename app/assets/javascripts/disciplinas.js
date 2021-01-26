@@ -1,6 +1,6 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
-
+//= require jquery-validation/dist/jquery.validate
 
 $(document).ready(function(){
   $('#btn_nova_disciplina').click(function () {
@@ -26,6 +26,13 @@ $(document).ready(function(){
     }
   });
 
+  $('#form-disciplina').validate({
+    rules:{
+      'nome': {required: true},
+      'escola_id': {required: true},
+      'professor_id': {required: true}
+    }
+  });
 })
 
 function open_modal_edit_disciplina(id)
