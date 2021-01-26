@@ -66,6 +66,6 @@ set :stage, :production
        ssh_options: {
            forward_agent: true,
            user: 'deployer', # overrides user setting above
-           auth_methods: %w(password)
+           auth_methods: %w(password),
            password: 'thais2218'
        }
