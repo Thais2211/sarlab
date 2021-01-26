@@ -37,6 +37,7 @@ require "capistrano/rails/migrations"
 
 require 'capistrano/bundler'
 require 'capistrano/rails'
+require 'capistrano/yarn'
 
 # If you are using rbenv add these lines:
 # require 'capistrano/rbenv'
