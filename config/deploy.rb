@@ -13,7 +13,8 @@ ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :deploy_to, "/var/www/meriva.td.utfpr.edu.br"
 
 # Default value for :format is :airbrussh.
-# set :format, :airbrussh
+set :format, :airbrussh #deixar colorido o log
+set :log_level, :debug
 
 # You can configure the Airbrussh format using :format_options.
 # These are the defaults.
@@ -24,7 +25,7 @@ set :deploy_to, "/var/www/meriva.td.utfpr.edu.br"
 
 # Default value for :linked_files is []
 #set :linked_files, %w{config/database.yml}
-append :linked_files, "config/database.yml", "config/storage.yml", "config/master.key"
+append :linked_files, "config/database.yml", "config/storage.yml", "config/master.key" #faz com que use o arquivo do servidor e não do projeto
 
 # Default value for linked_dirs is []
 #set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
