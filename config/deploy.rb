@@ -41,6 +41,12 @@ append :linked_dirs, "bin", "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vend
 # Default value for keep_releases is 5
 set :keep_releases, 5
 
+# Add or adjust default_env to append .npm-packages to $PATH:
+set :default_env, {
+   PATH: '$HOME/.npm-packages/bin/:$PATH',
+   NODE_ENVIRONMENT: 'production'
+}
+
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
  
