@@ -49,17 +49,5 @@ set :default_env, {
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
- 
-  namespace :deploy do
-  
-    desc 'Restart application'
-    task :restart do
-      on roles(:app), in: :sequence, wait: 5 do
-        execute "sudo /usr/bin/systemctl restart nginx"
-      end
-    end
-  
-    after :publishing, 'deploy:restart'
-    after :finishing, 'deploy:cleanup'
-  end
+
 
