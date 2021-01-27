@@ -55,7 +55,7 @@ set :default_env, {
     desc 'Restart application'
     task :restart do
       on roles(:app), in: :sequence, wait: 5 do
-        execute "sudo systemctl restart nginx"
+        execute "sudo /usr/bin/systemctl restart nginx"
       end
     end
   
