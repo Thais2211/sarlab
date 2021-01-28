@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_17_190008) do
+ActiveRecord::Schema.define(version: 2021_01_28_202031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,17 @@ ActiveRecord::Schema.define(version: 2021_01_17_190008) do
     t.datetime "updated_at", null: false
     t.string "local"
     t.index ["escola_id"], name: "index_laboratorys_on_escola_id"
+  end
+
+  create_table "logged_exceptions", force: :cascade do |t|
+    t.string "exception_class"
+    t.string "controller_name"
+    t.string "action_name"
+    t.text "message"
+    t.text "backtrace"
+    t.text "environment"
+    t.text "request"
+    t.datetime "created_at"
   end
 
   create_table "roles", force: :cascade do |t|

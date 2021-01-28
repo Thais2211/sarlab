@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  include ExceptionLogger::ExceptionLoggable # loades the module
+  rescue_from Exception, :with => :log_exception_handler # tells rails to forward the 'Exception' (you can change the type) to the handler of the module
+
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected

@@ -49,6 +49,10 @@ gem 'capistrano-rails'
 gem 'capistrano-rvm', github: "capistrano/rvm"
 gem 'capistrano-yarn'
 
+
+gem "exception_logger", :github => "ryancheung/exception_logger"
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
