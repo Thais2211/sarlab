@@ -62,6 +62,21 @@ ActiveRecord::Schema.define(version: 2021_01_28_202031) do
     t.index ["escola_id"], name: "index_laboratorys_on_escola_id"
   end
 
+  create_table "lessons", force: :cascade do |t|
+    t.date "date_start"
+    t.date "date_end"
+    t.string "day1"
+    t.time "hour1"
+    t.string "day2"
+    t.time "hour2"
+    t.string "day3"
+    t.time "hour3"
+    t.bigint "professor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["professor_id"], name: "index_lessons_on_professor_id"
+  end
+
   create_table "logged_exceptions", force: :cascade do |t|
     t.string "exception_class"
     t.string "controller_name"
@@ -128,6 +143,7 @@ ActiveRecord::Schema.define(version: 2021_01_28_202031) do
   add_foreign_key "disciplinas", "users", column: "professor_id"
   add_foreign_key "equipaments", "laboratorys"
   add_foreign_key "laboratorys", "escolas"
+  add_foreign_key "lessons", "users", column: "professor_id"
   add_foreign_key "schedules", "equipaments"
   add_foreign_key "schedules", "laboratorys"
   add_foreign_key "schedules", "type_reservations", column: "type_reservation_id"

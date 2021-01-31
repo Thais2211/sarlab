@@ -9,12 +9,14 @@
       <!-- Divider -->
   <hr class="sidebar-divider my-0">
 
+  <% if current_user.role_id.eql? 1 %>
       <!-- Nav Item - Dashboard -->
-  <li class="nav-item">
-    <a class="nav-link" href="index.html">
-      <i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard</span>
-    </a>
-  </li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.html">
+        <i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard</span>
+      </a>
+    </li>
+  <% end %>
 
       <!-- Divider -->
   <hr class="sidebar-divider">
@@ -27,40 +29,51 @@
 
   <hr class="sidebar-divider">
 
+  <% unless current_user.role_id.eql? 3 %>
       <!-- Heading -->
-  <div class="sidebar-heading">
-    Cadastros
-  </div>
-  <li class="nav-item">
-    <%= link_to escolas_path, :class => "nav-link" do %>
-      <i class="fas fa-fw fa-school"></i> <span>Escolas</span>
+    <div class="sidebar-heading">
+      Cadastros
+    </div>
+    <% if current_user.role_id.eql? 1 %>
+      <li class="nav-item">
+        <%= link_to escolas_path, :class => "nav-link" do %>
+          <i class="fas fa-fw fa-school"></i> <span>Escolas</span>
+        <% end %>
+      </li>
     <% end %>
-  </li>
-  <li class="nav-item">
-    <%= link_to disciplinas_path, :class => "nav-link" do %>
-      <i class="fas fa-fw fa-book"></i> <span>Disciplinas</span>
+    <li class="nav-item">
+      <%= link_to disciplinas_path, :class => "nav-link" do %>
+        <i class="fas fa-fw fa-book"></i> <span>Disciplinas</span>
+      <% end %>
+    </li>
+    <%# <li class="nav-item">
+      <%= link_to lessons_path, :class => "nav-link" do 
+        <i class="fas fa-fw fa-address-book"></i> <span>Aulas</span>
+      <% end 
+    </li> %>
+    <% if current_user.role_id.eql? 1 %>
+      <li class="nav-item">
+        <%= link_to laboratorys_path, :class => "nav-link" do %>
+          <i class="fas fa-fw fa-flask"></i> <span>Laboratórios</span>
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to equipaments_path, :class => "nav-link" do %>
+          <i class="fas fa-fw fa-bookmark"></i> <span>Equipamentos</span>
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to type_reservations_path, :class => "nav-link" do %>
+          <i class="fas fa-fw fa-bookmark"></i> <span>Tipos de reservas</span>
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to users_path, :class => "nav-link" do %>
+          <i class="fas fa-fw fa-users"></i> <span>Usuários</span>
+        <% end %>
+      </li>
     <% end %>
-  </li>
-  <li class="nav-item">
-    <%= link_to laboratorys_path, :class => "nav-link" do %>
-      <i class="fas fa-fw fa-flask"></i> <span>Laboratórios</span>
-    <% end %>
-  </li>
-  <li class="nav-item">
-    <%= link_to equipaments_path, :class => "nav-link" do %>
-      <i class="fas fa-fw fa-bookmark"></i> <span>Equipamentos</span>
-    <% end %>
-  </li>
-  <li class="nav-item">
-    <%= link_to type_reservations_path, :class => "nav-link" do %>
-      <i class="fas fa-fw fa-bookmark"></i> <span>Tipos de reservas</span>
-    <% end %>
-  </li>
-  <li class="nav-item">
-    <%= link_to users_path, :class => "nav-link" do %>
-      <i class="fas fa-fw fa-users"></i> <span>Usuários</span>
-    <% end %>
-  </li>
+  <% end %>
   
       <!-- Nav Item - Pages Collapse Menu -->
   <%# <li class="nav-item">
