@@ -13,11 +13,16 @@
 //= require rails-ujs
 //= require turbolinks
 //= require jquery/dist/jquery
+//= require jquery-ui
 //= require bootstrap/dist/js/bootstrap
 //= require jquery-easing/jquery.easing.1.3
 //= require datatables
 //= require sb-admin-2
 //= require toastr/toastr
+//= require moment
+//= require fullcalendar/main.min
+//= require fullcalendar/locales-all.min
+//= require bootstrap-datetimepicker
 
 
 function exibirErro(msgErro) {

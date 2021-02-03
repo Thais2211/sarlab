@@ -49,6 +49,10 @@ gem 'capistrano-rails'
 # Add this if you're using rvm
 gem 'capistrano-rvm', github: "capistrano/rvm"
 gem 'capistrano-yarn'
+gem 'fullcalendar'
+gem 'jquery-ui-rails'
+gem 'momentjs-rails'
+gem 'bootstrap-datetimepicker-rails'
 
 
 gem "exception_logger", :github => "ryancheung/exception_logger"
