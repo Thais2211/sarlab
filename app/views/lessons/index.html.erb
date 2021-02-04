@@ -1,0 +1,38 @@
+<div class="card o-hidden border-0 shadow-lg my-3">
+  <div class="card-body p-0">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="p-3">
+          <div class="text-left">
+            <span class="h1 font-weight text-lg-gray-800 mb-4">Aulas</span>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card o-hidden border-0 shadow-lg my-3">
+  <div class="card-body p-0">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="p-3">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="btn_new_lesson">
+              <i class="fas fa-plus-square" aria-hidden="true"> Novo registro</i>
+            </button>
+          </div>          
+        </div>
+      </div>
+    </div>
+    <div class="row mr-1 ml-1">
+      
+    </div>
+  </div>
+  <%= render 'lessons/modal_new_lesson' %>
+  <%= render 'laboratorys/modal_edit_laboratory' %>
+</div>
+
+
+<br>
+
+<%= link_to 'New Lessom', new_lessom_path %>

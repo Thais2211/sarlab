@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_28_202031) do
+ActiveRecord::Schema.define(version: 2021_02_04_004502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,15 +65,17 @@ ActiveRecord::Schema.define(version: 2021_01_28_202031) do
   create_table "lessons", force: :cascade do |t|
     t.date "date_start"
     t.date "date_end"
+    t.bigint "laboratory_id"
+    t.bigint "professor_id"
     t.string "day1"
     t.time "hour1"
     t.string "day2"
     t.time "hour2"
     t.string "day3"
     t.time "hour3"
-    t.bigint "professor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["laboratory_id"], name: "index_lessons_on_laboratory_id"
     t.index ["professor_id"], name: "index_lessons_on_professor_id"
   end
 
@@ -143,6 +145,7 @@ ActiveRecord::Schema.define(version: 2021_01_28_202031) do
   add_foreign_key "disciplinas", "users", column: "professor_id"
   add_foreign_key "equipaments", "laboratorys"
   add_foreign_key "laboratorys", "escolas"
+  add_foreign_key "lessons", "laboratorys"
   add_foreign_key "lessons", "users", column: "professor_id"
   add_foreign_key "schedules", "equipaments"
   add_foreign_key "schedules", "laboratorys"

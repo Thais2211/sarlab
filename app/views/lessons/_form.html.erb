@@ -1,0 +1,62 @@
+<%= form_with(model: lessom, local: true) do |form| %>
+  <% if lessom.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(lessom.errors.count, "error") %> prohibited this lessom from being saved:</h2>
+
+      <ul>
+      <% lessom.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :date_start %>
+    <%= form.date_select :date_start %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date_end %>
+    <%= form.date_select :date_end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :laboratory_id %>
+    <%= form.text_field :laboratory_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :day1 %>
+    <%= form.text_field :day1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :hour1 %>
+    <%= form.time_select :hour1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :day2 %>
+    <%= form.text_field :day2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :hour2 %>
+    <%= form.time_select :hour2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :day3 %>
+    <%= form.text_field :day3 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :hour3 %>
+    <%= form.time_select :hour3 %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

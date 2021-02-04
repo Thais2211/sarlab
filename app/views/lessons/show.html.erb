@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date start:</strong>
+  <%= @lessom.date_start %>
+</p>
+
+<p>
+  <strong>Date end:</strong>
+  <%= @lessom.date_end %>
+</p>
+
+<p>
+  <strong>Laboratory:</strong>
+  <%= @lessom.laboratory %>
+</p>
+
+<p>
+  <strong>Day1:</strong>
+  <%= @lessom.day1 %>
+</p>
+
+<p>
+  <strong>Hour1:</strong>
+  <%= @lessom.hour1 %>
+</p>
+
+<p>
+  <strong>Day2:</strong>
+  <%= @lessom.day2 %>
+</p>
+
+<p>
+  <strong>Hour2:</strong>
+  <%= @lessom.hour2 %>
+</p>
+
+<p>
+  <strong>Day3:</strong>
+  <%= @lessom.day3 %>
+</p>
+
+<p>
+  <strong>Hour3:</strong>
+  <%= @lessom.hour3 %>
+</p>
+
+<%= link_to 'Edit', edit_lessom_path(@lessom) %> |
+<%= link_to 'Back', lessons_path %>
