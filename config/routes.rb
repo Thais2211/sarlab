@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :equipaments do
     collection do
       get 'equipaments_labs'
+      get 'equipaments_labs_json'
     end
   end
   

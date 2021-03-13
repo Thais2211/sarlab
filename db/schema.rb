@@ -68,11 +68,14 @@ ActiveRecord::Schema.define(version: 2021_02_04_004502) do
     t.bigint "laboratory_id"
     t.bigint "professor_id"
     t.string "day1"
-    t.time "hour1"
+    t.time "hour1_start"
+    t.time "hour1_end"
     t.string "day2"
-    t.time "hour2"
+    t.time "hour2_start"
+    t.time "hour2_end"
     t.string "day3"
-    t.time "hour3"
+    t.time "hour3_start"
+    t.time "hour3_end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["laboratory_id"], name: "index_lessons_on_laboratory_id"

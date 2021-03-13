@@ -62,6 +62,31 @@ class LessonsController < ApplicationController
   end
 
   def new_lesson
+    byebug
+    lesson = Lesson.new(date_start: params[:date_start], date_end: params[:date_end], laboratory_id: params[:laboratory_id], professor_id: params[:professor_id], 
+                          day1: params[:day1], hour1_start: params[:hour1_start], hour1_end: params[:hour1_end])
+    
+    if params[:day2].present?
+      lesson.day2 = params[:day2]
+      lesson.hour2_start = params[:hour2_start]
+      lesson.hour2_end = params[:hour2_end]
+    end
+    if params[:day3].present?
+      lesson.day3 = params[:day3]
+      lesson.hour3_start = params[:hour3_start]
+      lesson.hour3_end = params[:hour3_end]
+    end
+    
+    lesson.save!
+    #criar reservas para aulas
+    #pegar o dia da semana e somar mais 7
+    #dom = 0
+    data_inicial = params[:date_start].to_date
+    data_final = params[:date_end].to_date
+    data = data_inicial
+    [0..7]
+
+    redirect_to type_reservations_path, notice:'Aula cadastrada com sucesso'
   end
 
   private
@@ -72,6 +97,6 @@ class LessonsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def lessom_params
-      params.require(:lessom).permit(:date_start, :date_end, :laboratory_id, :day1, :hour1, :day2, :hour2, :day3, :hour3)
+      params.require(:lessom).permit(:date_start, :date_end, :laboratory_id, :professor_id, :day1, :hour1_start, :hour1_end, :day2, :hour2_start, :hour2_end, :day3, :hour3_start, :hour3_end)
     end
 end

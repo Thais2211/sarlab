@@ -6,6 +6,27 @@
 //= require fullcalendar/locale-all
 
 $(document).ready(function () {
+
+  $('#laboratory_id').on('change', function () {      
+    $('#equipament_id').html('');
+    if($('#laboratory_id').val() != null && $('#laboratory_id').val() != ""){
+      $.ajax({
+        url: '/equipaments/equipaments_labs_json?lab=' + $('#laboratory_id').val(),
+        type: 'GET',
+        success: function (data) {
+            $('#equipament_id').append('<option value=""></option>');
+            $.each(data, function (k, v) {
+                $('#equipament_id').append('<option value="' + v['id'] + '">'+ v['name'] +'</option>');
+            });
+            $('#equipament_id').trigger("chosen:updated");
+        },error: function(data){
+            //exibirErro(data);
+        }
+      });
+    }
+  });
+
+
     //primeiro vai no events l:40 o event render é chamado pra cada agendamento e depois o after render
     //click em existente chama o event click
     //click em novo passa pelo render mas chama o select
@@ -27,7 +48,7 @@ $(document).ready(function () {
       selectable: true,
       selectHelper: true,
       select: function(start, end){
-          limparForm();
+          //limparForm();
           $('#form_agendamento #data_inicio').text(moment(start).format("DD/MM/YYYY HH:mm"));
           $('#form_agendamento #data_inicio').val(moment(start).format("DD/MM/YYYY HH:mm"));
           $('#form_agendamento #data_fim').text(moment(end).format("DD/MM/YYYY HH:mm"));

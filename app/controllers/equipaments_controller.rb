@@ -70,6 +70,12 @@ class EquipamentsController < ApplicationController
     render :index
   end
 
+  def equipaments_labs_json
+    equipaments = Equipament.where(laboratory_id: params[:lab])
+    
+    render json: equipaments
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_equipament
