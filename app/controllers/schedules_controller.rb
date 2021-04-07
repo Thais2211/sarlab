@@ -64,7 +64,7 @@ class SchedulesController < ApplicationController
   def get_schedules
     #@agendamentos = Array.new
     @agendamentos = Schedule.where("start between ? and ?", Time.at(params[:start].to_i), Time.at(params[:end].to_i))
-    byebug
+        
     render json: @agendamentos
   end
 

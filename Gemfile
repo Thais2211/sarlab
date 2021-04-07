@@ -53,6 +53,7 @@ gem 'fullcalendar'
 gem 'jquery-ui-rails'
 gem 'momentjs-rails'
 gem 'bootstrap-datetimepicker-rails'
+gem 'active_model_serializers'
 
 
 gem "exception_logger", :github => "ryancheung/exception_logger"

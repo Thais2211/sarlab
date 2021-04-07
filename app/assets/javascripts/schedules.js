@@ -72,10 +72,9 @@ $(document).ready(function () {
                   events.push({
                       id: agendamento['id'],
                       title: agendamento['tipo_agendamento'] + '\n' + agendamento['cliente_razao_social'],
-                      start: moment(agendamento['data_inicio']),
-                      end: moment(agendamento['data_fim']),
-                      obs: agendamento['observacao'],
-                      backgroundColor : agendamento['color'],
+                      start: moment(agendamento['start']),
+                      end: moment(agendamento['end']),
+                      backgroundColor: agendamento['color'],
                       borderColor: agendamento['color'],
                       user_id: (agendamento['user_id'] == null ? null : agendamento['user_id'].toString()),
                       user: agendamento['user_name'],
