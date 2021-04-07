@@ -48,6 +48,7 @@ $(document).ready(function () {
       selectable: true,
       selectHelper: true,
       select: function(start, end){
+          console.log('select');
           //limparForm();
           $('#form_agendamento #data_inicio').text(moment(start).format("DD/MM/YYYY HH:mm"));
           $('#form_agendamento #data_inicio').val(moment(start).format("DD/MM/YYYY HH:mm"));
@@ -56,16 +57,18 @@ $(document).ready(function () {
   
           $('#agendamento').modal('show');
       },
-      /*eventClick: function(calEvent, jsEvent, view) {
+      eventClick: function(calEvent, jsEvent, view) {
+          console.log('event click, l:60');
           $.getJSON('/agendamentos/' + calEvent.id, function(data) {
               showAgendamento(data);
           });
       },
       events: function(start, end, timezone, callback) {
-          $.getJSON('/agendamentos/get_agenda?start=' + start.unix() + "&end=" + end.unix() + "&status=" + $('#filtro_status').val()
-          + "&confirmacao=" + $('#filtro_confirmado').val() + "&sem_tecnico=" + $("#somente_sem_tecnico").is(':checked'), function(data) {
+          console.log('events l: 65');
+          $.getJSON('/schedules/get_schedules?start=' + start.unix() + "&end=" + end.unix() + "&status=" + $('#filtro_status').val(), function(data) {
               var events = [];
               $.each(data,function (i,agendamento){
+                  console.log(agendamento);
                   events.push({
                       id: agendamento['id'],
                       title: agendamento['tipo_agendamento'] + '\n' + agendamento['cliente_razao_social'],
@@ -109,6 +112,7 @@ $(document).ready(function () {
           });
       },
       eventRender: function eventRender( event, element, view ) {
+          console.log('event render');
           var content = '<h3>'+event.cliente + '</h3>' +
               '<h5>' + event.cidade + '</h5>'
               '<p><b>Tipo:</b> '+event.tipo+'<br />' +
@@ -165,8 +169,9 @@ $(document).ready(function () {
                   ['all', event.empresa_id].indexOf($('#filtro_empresa_id').val() == '' ? 'all' : $('#filtro_empresa_id').val()) >= 0
       },
       eventAfterAllRender: function (view) {
+          console.log('after render');
           var quantity = $('.fc-event').length;
           $("#quantity").text('(' + quantity + ' agendamentos)');
-      },*/
+      },
     });
   });

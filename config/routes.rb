@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :schedules
+  resources :schedules do
+    collection do
+      get 'get_schedules'
+    end
+  end
     
   resources :type_reservations do
     collection do

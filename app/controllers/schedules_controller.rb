@@ -61,6 +61,13 @@ class SchedulesController < ApplicationController
     end
   end
 
+  def get_schedules
+    #@agendamentos = Array.new
+    @agendamentos = Schedule.where("start between ? and ?", Time.at(params[:start].to_i), Time.at(params[:end].to_i))
+    byebug
+    render json: @agendamentos
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_schedule
