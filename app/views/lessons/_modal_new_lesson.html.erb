@@ -21,8 +21,8 @@
           </div>
           <div class="form-group row">
             <div class="col-sm-6">
-              <%= label_tag 'Professor', nil %>
-              <%= select_tag 'professor_id', options_for_select(User.where(role_id:2).order(:nome).collect {|p| [p.nome, p.id]}), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um professor'}, :include_blank => true} %>
+              <%= label_tag 'Disciplina', nil %>
+              <%= select_tag 'disciplina_id', options_for_select(Disciplina.where(escola_id: current_user.escola_id).order(:nome).collect {|p| [p.nome, p.id]}), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione uma disciplina'}, :include_blank => true} %>
             </div>
             <div class="col-sm-6">
               <%= label_tag 'Laboratório', nil %>

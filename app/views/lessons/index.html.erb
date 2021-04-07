@@ -25,14 +25,54 @@
       </div>
     </div>
     <div class="row mr-1 ml-1">
-      
+      <% @lessons.each do |item| %>
+        <div class="col-lg-4">
+          <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="m-0 font-weight-bold text-white"><%= item.disciplina.nome %></h5>
+              </div>
+              <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted"><%= human_date item.date_start %> à <%= human_date item.date_end%></h6>
+                <h6 class="card-subtitle mb-2 text-muted"><%= item.laboratory.name %></h6>
+                <div class="row">
+                  <div class="col-lg-3">
+                    <p class="card-text"><%= item.day1 %></p>
+                  </div>
+                  <div class="col-lg-3">
+                    <p class="card-text"><%= human_time item.hour1_start %></p>
+                  </div>
+                  <div class="col-lg-3">
+                    <p class="card-text"><%= human_time item.hour1_end %></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3">
+                    <p class="card-text"><%= item.day2 %></p>
+                  </div>
+                  <div class="col-lg-3">
+                    <p class="card-text"><%= human_time item.hour2_start %></p>
+                  </div>
+                  <div class="col-lg-3">
+                    <p class="card-text"><%= human_time item.hour2_end %></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3">
+                    <p class="card-text"><%= item.day3 %></p>
+                  </div>
+                  <div class="col-lg-3">
+                    <p class="card-text"><%= human_time item.hour3_start %></p>
+                  </div>
+                  <div class="col-lg-3">
+                    <p class="card-text"><%= human_time item.hour3_end %></p>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
   <%= render 'lessons/modal_new_lesson' %>
   <%= render 'laboratorys/modal_edit_laboratory' %>
 </div>
-
-
-<br>
-
-<%= link_to 'New Lessom', new_lessom_path %>

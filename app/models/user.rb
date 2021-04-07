@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   belongs_to :role, optional: true
   belongs_to :escola, optional: true
+  has_many :schedules
   
   validates :email, uniqueness: true
   validates :nome, :celular, presence: true

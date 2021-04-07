@@ -62,8 +62,7 @@ class LessonsController < ApplicationController
   end
 
   def new_lesson
-    byebug
-    lesson = Lesson.new(date_start: params[:date_start], date_end: params[:date_end], laboratory_id: params[:laboratory_id], professor_id: params[:professor_id], 
+    lesson = Lesson.new(date_start: params[:date_start], date_end: params[:date_end], laboratory_id: params[:laboratory_id], disciplina_id: params[:disciplina_id], 
                           day1: params[:day1], hour1_start: params[:hour1_start], hour1_end: params[:hour1_end])
     
     if params[:day2].present?
@@ -80,13 +79,23 @@ class LessonsController < ApplicationController
     lesson.save!
     #criar reservas para aulas
     #pegar o dia da semana e somar mais 7
-    #dom = 0
     data_inicial = params[:date_start].to_date
     data_final = params[:date_end].to_date
     data = data_inicial
-    [0..7]
+    #reservas do dia 1    
+    while data.wday != Lesson.week_day(lesson.day1) do
+      data = data + 1.day
+    end
+    while data <= data_final do
+      date_start = DateTime.new(data.year, data.month, data.day, lesson.hour1_start.hour, lesson.hour1_start.min, 0)
+      date_end = DateTime.new(data.year, data.month, data.day, lesson.hour1_end.hour, lesson.hour1_end.min, 0)
+      #reserva = Shedules.create(start: date_start, end: date_end, laboratory_id: lesson.laboratory_id, typeReservation_id:1 )
+      
+      Schedule.criarAgendamento date_start, date_end, lesson.laboratory_id, current_user.id
+      data = data + 7.day
+    end
 
-    redirect_to type_reservations_path, notice:'Aula cadastrada com sucesso'
+    redirect_to lessons_path, notice:'Aula cadastrada com sucesso'
   end
 
   private

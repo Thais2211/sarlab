@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_04_004502) do
+ActiveRecord::Schema.define(version: 2021_04_07_005103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(version: 2021_02_04_004502) do
     t.date "date_start"
     t.date "date_end"
     t.bigint "laboratory_id"
-    t.bigint "professor_id"
     t.string "day1"
     t.time "hour1_start"
     t.time "hour1_end"
@@ -78,8 +77,9 @@ ActiveRecord::Schema.define(version: 2021_02_04_004502) do
     t.time "hour3_end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "disciplina_id"
+    t.index ["disciplina_id"], name: "index_lessons_on_disciplina_id"
     t.index ["laboratory_id"], name: "index_lessons_on_laboratory_id"
-    t.index ["professor_id"], name: "index_lessons_on_professor_id"
   end
 
   create_table "logged_exceptions", force: :cascade do |t|
@@ -105,10 +105,9 @@ ActiveRecord::Schema.define(version: 2021_02_04_004502) do
     t.bigint "user_id"
     t.string "status"
     t.bigint "type_reservation_id"
-    t.bigint "admin_id"
+    t.integer "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admin_id"], name: "index_schedules_on_admin_id"
     t.index ["equipament_id"], name: "index_schedules_on_equipament_id"
     t.index ["laboratory_id"], name: "index_schedules_on_laboratory_id"
     t.index ["type_reservation_id"], name: "index_schedules_on_type_reservation_id"
@@ -148,13 +147,9 @@ ActiveRecord::Schema.define(version: 2021_02_04_004502) do
   add_foreign_key "disciplinas", "users", column: "professor_id"
   add_foreign_key "equipaments", "laboratorys"
   add_foreign_key "laboratorys", "escolas"
+  add_foreign_key "lessons", "disciplinas"
   add_foreign_key "lessons", "laboratorys"
-  add_foreign_key "lessons", "users", column: "professor_id"
-  add_foreign_key "schedules", "equipaments"
-  add_foreign_key "schedules", "laboratorys"
-  add_foreign_key "schedules", "type_reservations", column: "type_reservation_id"
   add_foreign_key "schedules", "users"
-  add_foreign_key "schedules", "users", column: "admin_id"
   add_foreign_key "users", "escolas"
   add_foreign_key "users", "roles"
 end
