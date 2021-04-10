@@ -4,6 +4,7 @@
 
 //= require fullcalendar
 //= require fullcalendar/locale-all
+//= require jquery.qtip.js
 
 $(document).ready(function () {
 
@@ -70,41 +71,17 @@ $(document).ready(function () {
               $.each(data,function (i,agendamento){
                   console.log(agendamento);
                   events.push({
-                      id: agendamento['id'],
-                      title: agendamento['tipo_agendamento'] + '\n' + agendamento['cliente_razao_social'],
-                      start: moment(agendamento['start']),
-                      end: moment(agendamento['end']),
-                      backgroundColor: agendamento['color'],
-                      borderColor: agendamento['color'],
-                      user_id: (agendamento['user_id'] == null ? null : agendamento['user_id'].toString()),
-                      user: agendamento['user_name'],
-                      tipo_id: (agendamento['tipo_agendamento_id'] == null ? null : agendamento['tipo_agendamento_id'].toString()),
-                      tipo: agendamento['tipo_agendamento'],
-                      cliente: agendamento['cliente_razao_social'],
-                      cliente_id: (agendamento['cliente_id'] == null ? null : agendamento['cliente_id'].toString()),
-                      empresa: agendamento['empresa'],
-                      empresa_id: agendamento['empresa_id'].toString(),
-                      solicitante: agendamento['user_registro'],
-                      telefone: agendamento['telefone'],
-                      responsavel: agendamento['responsavel'],
-                      telefone2: agendamento['telefone2'],
-                      resposavel2: agendamento['responsavel2'],
-                      implantacao_id: agendamento['implantacao_id'],
-                      sistema: agendamento['sistema'],
-                      vendedor: agendamento['vendedor'],
-                      vendedor_id: (agendamento['vendedor_id'] == null ? null : agendamento['vendedor_id'].toString()),
-                      negociador_id: (agendamento['negociador_id'] == null ? null : agendamento['negociador_id']),
-                      dias_de_teste: agendamento['dias_de_teste'],
-                      tipo_fechamento: agendamento['tipo_fechamento'],
-                      data_fechamento: agendamento['data_fechamento'],
-                      status: agendamento['ativo'],
-                      motivo: agendamento['motivo'],
-                      data_cancelamento: agendamento['data_cancelamento'],
-                      user_cancelamento: agendamento['user_cancelamento'],
-                      confirmado: agendamento['confirmado'],
-                      usuario_confirmacao: agendamento['usuario_confirmacao'],
-                      data_confirmacao: agendamento['data_confirmacao'],
-                      cidade: agendamento['cidade']
+                    id: agendamento['id'],
+                    title: agendamento['type_reservation']['description'] + '\n' + agendamento['laboratory']['name'],
+                    start: moment(agendamento['start']),
+                    end: moment(agendamento['end']),
+                    backgroundColor: agendamento['color'],
+                    borderColor: agendamento['color'],
+                    user_id: agendamento['user_id'],
+                    user: agendamento['user']['nome'],
+                    status: agendamento['status'],
+                    laboratory: agendamento['laboratory']['name'],
+                    type_reservation: agendamento['type_reservation']['description']
                   });
               });
               callback(events);
@@ -112,21 +89,12 @@ $(document).ready(function () {
       },
       eventRender: function eventRender( event, element, view ) {
           console.log('event render');
-          var content = '<h3>'+event.cliente + '</h3>' +
-              '<h5>' + event.cidade + '</h5>'
-              '<p><b>Tipo:</b> '+event.tipo+'<br />' +
-              '<p><b>Atendente:</b> '+event.user+'</p>';
-          if(event.sistema != null)
-              content = content + '<p><b>Sistema:</b> '+event.sistema+'</p>';
-          if(event.vendedor != null)
-              content = content + '<p><b>Vendedor:</b> '+event.vendedor+'</p>';
-          if(event.dias_de_teste != null)
-              content = content + '<p><b>Dias teste:</b> '+event.dias_de_teste+'</p>';
-          if(event.user != null)
-              content = content + '<p><b>Técnico:</b> '+event.user+'</p>';
-          else
-              content = content + '<p><b>Técnico:</b> </p>';
-          content = content + '<p><b>Empresa:</b> '+event.empresa+'</p>';
+          console.log(event);
+          var content = '<h3>'+event.laboratory + '</h3>' +
+              '<h5>' + event.type_reservation + '</h5>'
+              '<p><b>Solicitante:</b> '+event.nome+'<br />' +
+              '<p><b>Status:</b> '+event.status+'</p>';          
+          
               element.qtip({
                   content: {
                       text: content
@@ -150,6 +118,7 @@ $(document).ready(function () {
                   var css = $(element).css('background-color');
                   if(css != '') {
                       css = css.substring(4, css.length - 1);
+                      console.log(css);
                       var array = css.split(',')
                       var color1 = parseInt(array[0].trim());
                       color1 = Math.round((color1 + 255)/2);
