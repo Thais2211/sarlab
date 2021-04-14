@@ -4,7 +4,7 @@
 
 //= require fullcalendar
 //= require fullcalendar/locale-all
-//= require jquery.qtip.js
+
 
 $(document).ready(function () {
 
@@ -15,6 +15,7 @@ $(document).ready(function () {
         url: '/equipaments/equipaments_labs_json?lab=' + $('#laboratory_id').val(),
         type: 'GET',
         success: function (data) {
+            console.log('add equipamentos');
             $('#equipament_id').append('<option value=""></option>');
             $.each(data, function (k, v) {
                 $('#equipament_id').append('<option value="' + v['id'] + '">'+ v['name'] +'</option>');
@@ -26,6 +27,23 @@ $(document).ready(function () {
       });
     }
   });
+
+  $('#btnSalvarAgendamento').click(function () {
+    $.ajax({
+      url: '/schedules/save_schedule',
+      data: { start: $('#agendamento #start').val(), end: $('#agendamento #end').val(), 
+              laboratory_id: $('#agendamento #laboratory_id').val(), equipament_id: $('#agendamento #equipament_id').val(),
+              type_reservation_id: $('#agendamento #type_reservation_id').val(),
+      },
+      type: 'POST',
+      success: function (data) {
+          exibirMsg("agendamento realizado");
+          window.location.reload();
+      },error: function(data){
+          //exibirErro(data);
+      }
+    });
+  })
 
 
     //primeiro vai no events l:40 o event render é chamado pra cada agendamento e depois o after render
@@ -51,10 +69,10 @@ $(document).ready(function () {
       select: function(start, end){
           console.log('select');
           //limparForm();
-          $('#form_agendamento #data_inicio').text(moment(start).format("DD/MM/YYYY HH:mm"));
-          $('#form_agendamento #data_inicio').val(moment(start).format("DD/MM/YYYY HH:mm"));
-          $('#form_agendamento #data_fim').text(moment(end).format("DD/MM/YYYY HH:mm"));
-          $('#form_agendamento #data_fim').val(moment(end).format("DD/MM/YYYY HH:mm"));
+          $('#agendamento #start').text(moment(start).format("DD/MM/YYYY HH:mm"));
+          $('#agendamento #start').val(moment(start).format("DD/MM/YYYY HH:mm"));
+          $('#agendamento #end').text(moment(end).format("DD/MM/YYYY HH:mm"));
+          $('#agendamento #end').val(moment(end).format("DD/MM/YYYY HH:mm"));
   
           $('#agendamento').modal('show');
       },
@@ -91,29 +109,11 @@ $(document).ready(function () {
           console.log('event render');
           console.log(event);
           var content = '<h3>'+event.laboratory + '</h3>' +
-              '<h5>' + event.type_reservation + '</h5>'
+              '<h5>' + event.type_reservation + 'teste</h5>'
               '<p><b>Solicitante:</b> '+event.nome+'<br />' +
               '<p><b>Status:</b> '+event.status+'</p>';          
           
-              element.qtip({
-                  content: {
-                      text: content
-                  },
-                  position: {
-                      my: 'bottom center',
-                      at: 'top center',
-                      viewport: $('#fullcalendar'),
-                      adjust: {
-                          mouse: false,
-                          scroll: false
-                      }
-                  },
-                  style: 'qtip-light',
-                  show: { solo: true },
-                  hide: {
-                      delay: 10
-                  }
-              });
+              
               if(event.end.add(2, 'hours') < moment()){
                   var css = $(element).css('background-color');
                   if(css != '') {
@@ -130,11 +130,6 @@ $(document).ready(function () {
                       var css = $(element).css('background-color');
                   }
               }
-              return ['all', event.user_id].indexOf($('#user_id_selector').val()) >= 0 &&
-                  ['all', event.tipo_id].indexOf($('#tipo_id_selector').val()) >= 0 &&
-                  ['all', event.cliente_id].indexOf($('#filtro_cliente_id').val()) >= 0 &&
-                  ['all', event.vendedor_id].indexOf($('#filtro_vendedor_id').val() == '' ? 'all' : $('#filtro_vendedor_id').val()) >= 0 &&
-                  ['all', event.empresa_id].indexOf($('#filtro_empresa_id').val() == '' ? 'all' : $('#filtro_empresa_id').val()) >= 0
       },
       eventAfterAllRender: function (view) {
           console.log('after render');

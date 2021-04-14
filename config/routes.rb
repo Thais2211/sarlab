@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :schedules do
     collection do
       get 'get_schedules'
+      post 'save_schedule'
     end
   end
     

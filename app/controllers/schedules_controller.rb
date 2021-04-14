@@ -68,6 +68,14 @@ class SchedulesController < ApplicationController
     render json: @agendamentos
   end
 
+  def save_schedule
+    schedule = Schedule.new(start: params[:start], end: params[:end], status: 'PENDENTE', laboratory_id: params[:laboratory_id], 
+                equipament_id: params[:equipament_id], type_reservation_id: params[:type_reservation_id], user: current_user)
+    schedule.save!
+
+    render json: schedule
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_schedule
