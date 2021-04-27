@@ -20,8 +20,7 @@
 //= require sb-admin-2
 //= require toastr/toastr
 //= require moment
-//= require fullcalendar/main.min
-//= require fullcalendar/locales-all.min
+//= require fullcalendar
 //= require bootstrap-datetimepicker
 
 
