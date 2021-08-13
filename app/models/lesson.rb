@@ -1,6 +1,7 @@
 class Lesson < ApplicationRecord
   belongs_to :laboratory
   belongs_to :disciplina
+  has_many :anexos, foreign_key: 'anexo_id'
 
   def self.week_day(day)
     case day

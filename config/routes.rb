@@ -72,6 +72,13 @@ Rails.application.routes.draw do
       post 'alter_password'
     end
   end
+
+  resources :upload do
+    collection do
+      get 'download_file'
+      get 'remove_file'
+    end
+  end
   
   mount ExceptionLogger::Engine => "/exception_logger"
 end

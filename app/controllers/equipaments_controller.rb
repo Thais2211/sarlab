@@ -14,6 +14,7 @@ class EquipamentsController < ApplicationController
   # GET /equipaments/1
   # GET /equipaments/1.json
   def show
+    @anexos = Anexo.where(equipament_id: @equipament.id)
   end
 
   # GET /equipaments/new

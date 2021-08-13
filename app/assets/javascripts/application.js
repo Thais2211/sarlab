@@ -19,6 +19,7 @@
 //= require datatables
 //= require sb-admin-2
 //= require toastr/toastr
+//= require dropzone
 //= require moment
 //= require fullcalendar
 //= require bootstrap-datetimepicker
@@ -52,4 +53,19 @@ function exibirWarning(msg){
       showMethod: 'slideDown'
   };
   toastr.warning(msg);
+}
+
+function remover_anexo(id)
+{
+    $.ajax({
+        type: "GET",
+        url: "/upload/remove_file",
+        data: {
+        id: id
+        },
+        success: function(result) {
+            $('#anexo-' + id).remove();
+            exibirMsg("Anexo removido com sucesso");
+        }
+    });
 }

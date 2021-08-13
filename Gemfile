@@ -54,7 +54,8 @@ gem 'jquery-ui-rails'
 gem 'momentjs-rails'
 gem 'bootstrap-datetimepicker-rails'
 gem 'active_model_serializers'
-
+gem 'carrierwave'
+gem 'dropzonejs-rails'
 
 gem "exception_logger", :github => "ryancheung/exception_logger"
 
