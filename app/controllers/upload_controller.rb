@@ -1,16 +1,14 @@
 class UploadController < ApplicationController
   
   def create
-    byebug
     if params[:equipament].present?      
-      equipament = Equipament.find params[:equipament]
-      anexo = Anexo.new(equipament: equipament)
+      anexo = Anexo.new(equipament_id: params[:equipament])
     #elsif params[:desistencia].present?  
       #anexo = Anexo.new(solicitacao_desistencia_id: params[:desistencia])
     end
 
     anexo.file = params[:file]
-
+    
     if anexo.save!
       render json: anexo, status: 201
     else

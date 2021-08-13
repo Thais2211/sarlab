@@ -46,37 +46,10 @@
           <%= form.text_field :capacity, class: 'form-control form-control' %>
         </div>
 
-        <div class="col-sm-4">
-          <form action="/upload" id="mediadropzone" class="dropzone" enctype="multipart/form-data">
-            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
-            <%= hidden_field_tag 'equipament', @equipament.id %>
-            <div class="dz-message">    
-              <h5><i class="fa fa-paperclip"> </i> Anexos</h5>
-            </div>
-            <div class="fallback">
-            <input name="media" type="file" multiple />
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <div class="form-group row">
         <%= form.label 'patrimony', 'Patrimônio', class: 'col-2 control-label padding'  %>
         <div class="col-sm-4">          
           <%= form.text_field :patrimony, class: 'form-control form-control' %>
         </div>
-        <% if @anexos.present? %>
-          <div class="col-sm-6">
-            <% @anexos.each do |att|%>
-              <div id="anexo-<%=att.id%>">
-                <i class="fa fa-file-text-o"></i> <%= link_to File.basename(att.file.path), {action: 'download_file', id: att.id, controller: 'upload'}, target: '_blank'  %>
-                <button type="button" class="btn btn-danger" onclick="remover_anexo('<%= att.id %>')" ><i class="fa fa-trash"></i> </button>                                                    
-                
-                <br />
-              </div>
-            <% end %>
-          </div>
-        <% end %>
       </div>
 
       <div class="form-group row">
@@ -84,9 +57,7 @@
         <div class="col-sm-3">          
           <%= form.number_field :simultaneous_use, class: 'form-control form-control' %>
         </div>
-      </div>
 
-      <div class="form-group row">
         <%= form.label 'laboratory_id', 'Laboratório', class: 'col-2 control-label padding' %>
         <div class="col-sm-4"> 
           <%= form.collection_select :laboratory_id, Laboratory.all, :id, :name, { :include_blank => true},

@@ -1,10 +1,10 @@
 class CreateAnexos < ActiveRecord::Migration[5.2]
   def change
     create_table :anexos do |t|
-      t.references :equipament, foreign_key: true
-      t.references :disciplina, foreign_key: true
-      t.references :laboratory, foreign_key: true
-      t.references :lesson, foreign_key: true
+      t.integer :equipament_id
+      t.integer :disciplina_id
+      t.integer :laboratory_id
+      t.integer :lesson_id
       t.string :file
 
       t.timestamps

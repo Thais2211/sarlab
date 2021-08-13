@@ -5,14 +5,3 @@
 <% end  %>
 
 <%= link_to 'New user', new_user_path %>
-
-
-<form action="/upload" id="mediadropzone" class="dropzone" enctype="multipart/form-data">
-            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
-            <div class="dz-message">    
-              <h5><i class="fa fa-paperclip"> </i> Anexos</h5>
-            </div>
-            <div class="fallback">
-            <input name="media" type="file" multiple />
-            </div>
-          </form>

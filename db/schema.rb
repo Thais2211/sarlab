@@ -16,17 +16,13 @@ ActiveRecord::Schema.define(version: 2021_08_12_233928) do
   enable_extension "plpgsql"
 
   create_table "anexos", force: :cascade do |t|
-    t.bigint "equipament_id"
-    t.bigint "disciplina_id"
-    t.bigint "laboratory_id"
-    t.bigint "lesson_id"
+    t.integer "equipament_id"
+    t.integer "disciplina_id"
+    t.integer "laboratory_id"
+    t.integer "lesson_id"
     t.string "file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["disciplina_id"], name: "index_anexos_on_disciplina_id"
-    t.index ["equipament_id"], name: "index_anexos_on_equipament_id"
-    t.index ["laboratory_id"], name: "index_anexos_on_laboratory_id"
-    t.index ["lesson_id"], name: "index_anexos_on_lesson_id"
   end
 
   create_table "disciplinas", force: :cascade do |t|
@@ -158,10 +154,6 @@ ActiveRecord::Schema.define(version: 2021_08_12_233928) do
     t.index ["role_id"], name: "index_users_on_role_id"
   end
 
-  add_foreign_key "anexos", "disciplinas"
-  add_foreign_key "anexos", "equipaments"
-  add_foreign_key "anexos", "laboratorys"
-  add_foreign_key "anexos", "lessons", column: "lesson_id"
   add_foreign_key "disciplinas", "escolas"
   add_foreign_key "disciplinas", "users", column: "professor_id"
   add_foreign_key "equipaments", "laboratorys"
