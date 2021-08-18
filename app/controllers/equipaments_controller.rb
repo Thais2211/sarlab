@@ -85,6 +85,6 @@ class EquipamentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def equipament_params
-      params.require(:equipament).permit(:name, :description, :brand, :model, :capacity, :patrimony, :laboratory_id, :simultaneous_use)
+      params.require(:equipament).permit(:name, :description, :brand, :model, :capacity, :patrimony, :laboratory_id, :simultaneous_use, :image)
     end
 end
