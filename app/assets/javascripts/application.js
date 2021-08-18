@@ -21,7 +21,6 @@
 //= require toastr/toastr
 //= require dropzone
 //= require moment
-//= require fullcalendar
 //= require bootstrap-datetimepicker
 
 

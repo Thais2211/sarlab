@@ -6,7 +6,7 @@
     "bootstrap": "4.5.0",
     "dropzone": "^5.9.2",
     "dropzone.js": "^0.0.28",
-    "jquery": "3.5.1",
+    "jquery": "3.4.1",
     "jquery-easing": "^0.0.1",
     "jquery-validation": "^1.19.2",
     "toastr": "^2.1.4"

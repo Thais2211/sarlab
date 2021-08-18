@@ -44,6 +44,64 @@ $(document).ready(function () {
       }
     });
   })
+});
+$(function() {
+  $('#calendar1').fullCalendar({
+    defaultView: 'agendaDay',
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'agendaWeek,agendaDay'
+    },
+    timezone:'local',
+      height: 730,
+      defaultDate: Date(),
+      allDaySlot: false,
+    events: 'https://fullcalendar.io/demo-events.json'
+  })
+
+  $('#calendar9').fullCalendar({
+    header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+    },
+    defaultView: 'agendaWeek',
+    timezone:'local',
+    height: 730,
+    defaultDate: Date(),
+    navLinks: true, // can click day/week names to navigate views
+    eventLimit: true, // allow "more" link when too many events
+    allDaySlot: false,
+    minTime: "07:00:00",
+    maxTime: "23:30:00",
+    selectable: true,
+    selectHelper: true,
+    events: function(start, end, timezone, callback) {
+      console.log('events l: 65');
+      $.getJSON('/schedules/get_schedules?start=' + start.unix() + "&end=" + end.unix() + "&status=" + $('#filtro_status').val(), function(data) {
+          var events = [];
+          $.each(data,function (i,agendamento){
+              console.log(agendamento);
+              events.push({
+                id: agendamento['id'],
+                title: agendamento['type_reservation']['description'] + '\n' + agendamento['laboratory']['name'],
+                start: moment(agendamento['start']),
+                end: moment(agendamento['end']),
+                backgroundColor: agendamento['color'],
+                textColor: 'white',
+                borderColor: agendamento['color'],
+                user_id: agendamento['user_id'],
+                user: agendamento['user']['nome'],
+                status: agendamento['status'],
+                laboratory: agendamento['laboratory']['name'],
+                type_reservation: agendamento['type_reservation']['description']
+              });
+          });
+          callback(events);
+      });
+    },
+  });
 
 
     //primeiro vai no events l:40 o event render é chamado pra cada agendamento e depois o after render
@@ -55,7 +113,7 @@ $(document).ready(function () {
           center: 'title',
           right: 'month,agendaWeek,agendaDay'
       },
-      defaultView: 'agendaDay',
+      defaultView: 'agendaWeek',
       timezone:'local',
       height: 730,
       defaultDate: Date(),
@@ -93,7 +151,8 @@ $(document).ready(function () {
                     title: agendamento['type_reservation']['description'] + '\n' + agendamento['laboratory']['name'],
                     start: moment(agendamento['start']),
                     end: moment(agendamento['end']),
-                    backgroundColor: agendamento['color'],
+                    backgroundColor: agendamento['type_reservation']['color'],
+                    textColor: 'white',
                     borderColor: agendamento['color'],
                     user_id: agendamento['user_id'],
                     user: agendamento['user']['nome'],
@@ -138,3 +197,4 @@ $(document).ready(function () {
       },
     });
   });
+  
