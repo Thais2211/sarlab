@@ -37,7 +37,6 @@ $(document).ready(function(){
 
 function open_modal_edit_disciplina(id)
 {
-  console.log('open modal edit');
   //pegar dados
   $.getJSON("/disciplinas/get_disciplina?id=" + id, function( data ) {
     console.log(data);

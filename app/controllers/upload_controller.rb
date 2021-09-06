@@ -3,8 +3,8 @@ class UploadController < ApplicationController
   def create
     if params[:equipament].present?      
       anexo = Anexo.new(equipament_id: params[:equipament])
-    #elsif params[:desistencia].present?  
-      #anexo = Anexo.new(solicitacao_desistencia_id: params[:desistencia])
+    elsif params[:lesson_id].present?  
+      anexo = Anexo.new(lesson_id: params[:lesson_id])
     end
 
     anexo.file = params[:file]
@@ -25,13 +25,13 @@ class UploadController < ApplicationController
 
   def remove_file
     upload = Anexo.find params[:id]
-    cliente = Cliente.find upload.cliente_id if upload.cliente_id.present?
         
     upload.remove_file!
     
     if upload.destroy!
-      if upload.cliente_id.present?
-        render json: cliente
+      if upload.lesson_id.present?
+        lesson = Lesson.find upload.lesson_id
+        render json: lesson
       else
         desistencia = SolicitacaoDesistencia.find upload.solicitacao_desistencia_id
         render json: desistencia

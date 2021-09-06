@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :lessons do
     collection do
       post 'new_lesson'
+      post 'review'
     end
   end
   

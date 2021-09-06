@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_18_010228) do
+ActiveRecord::Schema.define(version: 2021_09_06_172434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,23 +74,19 @@ ActiveRecord::Schema.define(version: 2021_08_18_010228) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.date "date_start"
-    t.date "date_end"
+    t.date "data"
+    t.time "start_time"
+    t.time "end_time"
     t.bigint "laboratory_id"
-    t.string "day1"
-    t.time "hour1_start"
-    t.time "hour1_end"
-    t.string "day2"
-    t.time "hour2_start"
-    t.time "hour2_end"
-    t.string "day3"
-    t.time "hour3_start"
-    t.time "hour3_end"
+    t.bigint "disciplina_id"
+    t.boolean "review", default: false
+    t.bigint "users_id"
+    t.date "date_review"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "disciplina_id"
     t.index ["disciplina_id"], name: "index_lessons_on_disciplina_id"
     t.index ["laboratory_id"], name: "index_lessons_on_laboratory_id"
+    t.index ["users_id"], name: "index_lessons_on_users_id"
   end
 
   create_table "logged_exceptions", force: :cascade do |t|
@@ -119,6 +115,7 @@ ActiveRecord::Schema.define(version: 2021_08_18_010228) do
     t.integer "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "lesson_id"
     t.index ["equipament_id"], name: "index_schedules_on_equipament_id"
     t.index ["laboratory_id"], name: "index_schedules_on_laboratory_id"
     t.index ["type_reservation_id"], name: "index_schedules_on_type_reservation_id"
