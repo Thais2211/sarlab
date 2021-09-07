@@ -21,7 +21,7 @@
         </div>
         <%= form.label 'laboratory_id', 'Laboratório', class: 'col-2 control-label padding' %>
         <div class="col-sm-4"> 
-          <%= form.collection_select :laboratory_id, Laboratory.all, :id, :name,
+          <%= form.collection_select :laboratory_id, Laboratory.where(active: true), :id, :name,
                                                 {class: 'form-control input-sm'} %>
         </div>
       </div>

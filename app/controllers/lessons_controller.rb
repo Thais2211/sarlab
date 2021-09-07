@@ -88,6 +88,8 @@ class LessonsController < ApplicationController
     lesson = Lesson.find params[:id]
     
     lesson.update(review: !lesson.review, users_id: current_user.id)
+
+    render json: lesson
   end
 
   private

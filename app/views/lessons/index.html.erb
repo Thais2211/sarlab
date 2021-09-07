@@ -30,9 +30,13 @@
               </div> 
             </div> 
             <div class="form-group row">  
+              <div class="col-sm-3" style="display:flex">
+                <%= f.label :data_gteq, 'De' %>
+                <%= f.date_field :data_gteq, class: 'left-10' %>
+              </div>
               <div class="col-sm-4" style="display:flex">
-                <%= f.label :data_eq, 'Data' %>
-                <%= f.date_field :data_eq, class: 'left-10' %>
+                <%= f.label :data_lteq, 'Até' %>
+                <%= f.date_field :data_lteq, class: 'left-10' %>
               </div>
               <%# <div class="col-sm-2"  style="display:flex">
                 <%= f.label :review_true, 'Revisado?'  

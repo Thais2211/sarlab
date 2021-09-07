@@ -19,3 +19,23 @@ function open_modal_edit_lab(id)
 
   $('#modalEditLaboratory').modal('show');
 }
+
+function toggle_lab(id){
+  $.ajax({
+    url: '/laboratorys/toggle_lab',
+    data: {id: id
+          },
+    type: 'POST',
+    success: function (data) {
+      if(data['active'] == true)
+        exibirMsg("Laboratório ativado com sucesso.");
+      else
+        exibirMsg("Laboratório desativado com sucesso.");
+
+      window.location.reload();
+    },error: function(data) {
+      console.log('errors');
+      exibirErro('Ocorreu algum erro.');
+    }
+  });
+}
