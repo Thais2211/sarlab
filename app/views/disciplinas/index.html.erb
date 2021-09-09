@@ -28,7 +28,7 @@
                 <th>Nome</th>
                 <th>Instituição</th>
                 <th>Professor</th>
-                <th></th>
+                <th style="width:20%"></th>
               </tr>
             </thead>
             <tbody>
@@ -37,7 +37,14 @@
                   <td><%= disciplina.nome %></td>
                   <td><%= disciplina.escola.nome %></td>
                   <td><%= disciplina.professor.nome %></td>
-                  <td><button class="btn btn-primary btn-sm" onclick="open_modal_edit_disciplina(<%= disciplina.id %>)">Editar</button></td>                  
+                  <td>
+                    <button class="btn btn-primary btn-sm" onclick="open_modal_edit_disciplina(<%= disciplina.id %>)">Editar</button>
+                    <% if disciplina.active %>
+                      <button class="btn btn-warning btn-sm" type="button" onclick="toggle(<%= disciplina.id %>)">Desativar</button>
+                    <% else %>
+                      <button class="btn btn-success btn-sm" type="button" onclick="toggle(<%= disciplina.id %>)">Ativar</button>
+                    <% end %>
+                  </td>                  
                 </tr>
               <% end %>
             </tbody>

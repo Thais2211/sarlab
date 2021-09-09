@@ -16,7 +16,7 @@
       <div class="form-group row">
         <%= form.label 'disciplina_id', 'Disciplina', class: 'col-2 control-label padding' %>
         <div class="col-sm-4"> 
-          <%= form.collection_select :disciplina_id, Disciplina.all, :id, :nome,
+          <%= form.collection_select :disciplina_id, Disciplina.where(active: true), :id, :nome,
                                                 {class: 'form-control input-sm'} %>
         </div>
         <%= form.label 'laboratory_id', 'Laboratório', class: 'col-2 control-label padding' %>

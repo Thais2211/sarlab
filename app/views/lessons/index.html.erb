@@ -26,7 +26,7 @@
               </div>      
               <div class="col-sm-6">
                 <%= f.label :disciplina_id_eq, 'Disciplina'  %>
-                <%= f.collection_select :disciplina_id_eq, Disciplina.all.order(:nome), :id, :nome, {include_blank: true}, {class: "w-80"}%>
+                <%= f.collection_select :disciplina_id_eq, Disciplina.where(active: true).order(:nome), :id, :nome, {include_blank: true}, {class: "w-80"}%>
               </div> 
             </div> 
             <div class="form-group row">  

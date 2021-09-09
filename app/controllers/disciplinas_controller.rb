@@ -88,6 +88,14 @@ class DisciplinasController < ApplicationController
     redirect_to disciplinas_path, notice:'Disciplina atualizada com sucesso'
   end
 
+  def toggle
+    obj = Disciplina.find params[:id]
+    
+    obj.update(active: !obj.active)
+
+    render json: obj
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_disciplina

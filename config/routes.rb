@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       post 'nova_disciplina'
       get 'get_disciplina' 
       post 'atualizar_disciplina'     
+      post 'toggle'
     end
   end
 
