@@ -17,39 +17,38 @@
               <div id="tab-dados" class="tab-pane active">
                 <div class="panel-body" >
                   <div class="form-group row">
+                    <%= hidden_field_tag :id, nil, class: 'form-control input-sm' %>
                     <div class="col-sm-6" >
                       <%= label_tag 'start', 'Inicio' %>
-                      <%= datetime_field_tag :start, Time.now.strftime("%Y-%m-%d %hh:%mm"), class: 'form-control form-control' %>
+                      <div class='input-group date' id='datetimepicker1'>
+                      <%= text_field_tag :start, nil, class: 'form-control form-control', autocomplete: "off",  placeholder: 'DD/MM/YYYY HH:mm'  %>
+                      </div>
                     </div>
                     <div class="col-sm-6" >
                       <%= label_tag 'end', 'Fim' %>
-                      <%= datetime_field_tag :end, (Time.now + 1.hour).strftime("%Y-%m-%d"), class: 'form-control form-control' %>
+                      <%= text_field_tag :end, (Time.now + 1.hour).strftime("%Y-%m-%d"), class: 'form-control form-control' %>
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-12">
                       <%= label_tag 'Laboratório', nil %>
-                      <%= select_tag 'laboratory_id', options_for_select(Laboratory.where(active: true).order(:name).collect {|p| [p.name, p.id]}), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um professor'}, :include_blank => true} %>
+                      <%= select_tag 'laboratory_id', options_for_select(Laboratory.where(active: true).order(:name).collect {|p| [p.name, p.id]}), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um laboratório'}, :include_blank => true} %>
                     </div>
                   </div>   
                   <div class="form-group row">
                     <div class="col-sm-12">
                       <%= label_tag 'Equipamento', nil %>
-                      <%= select_tag 'equipament_id', options_for_select([]), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um professor'}, :include_blank => true} %>
+                      <%= select_tag 'equipament_id', options_for_select([]), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um equipamento'}, :include_blank => true} %>
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-6">
                       <%= label_tag 'Tipo reserva', nil %>
-                      <%= select_tag 'type_reservation_id', options_for_select(TypeReservation.all.order(:description).collect {|p| [p.description, p.id]}), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um professor'}, :include_blank => false} %>
+                      <%= select_tag 'type_reservation_id', options_for_select(TypeReservation.all.order(:description).collect {|p| [p.description, p.id]}), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um tipo de reserva'}, :include_blank => false} %>
                     </div>
                     <div class="col-sm-6">
                       <%= label_tag 'Status', nil %>
-                      <%= select_tag 'status', options_for_select([
-                                                                  ['PENDENTE', 'PENDENTE'],
-                                                                  ['CONFIRMADO', 'CONFIRMADO'],
-                                                                  ['REJEITADO', 'REJEITADO']
-                                                                ],'PENDENTE'), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um professor'}, :readOnly => true} %>
+                      <%= text_field_tag 'status', nil, class:"form-control-sm  form-control", readOnly: true %>
                     </div>
                   </div> 
                 </div>
@@ -57,61 +56,18 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" id="btnExcluirEvento">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="btnSalvarAgendamento" style="display: none;">Salvar</button>
-          <%= submit_tag 'Salvar', :class => 'btn btn-primary' %>
+        <div class="modal-footer">          
+          <% if current_user.role_id.eql? 1 %>
+            <button type="button" class="btn btn-success" id="btnAprovarReserva" onclick="aprovarReserva()" >Aprovar </button>
+            <button type="button" class="btn btn-warning" id="btnRejeitarReserva" >Rejeitar </button>            
+            <button type="button" class="btn btn-danger" id="btnCancelarReserva" >Cancelar </button>
+          <% end %>
+          <%= submit_tag 'Salvar', :id =>"btnSalvarAgendamento", :class => 'btn btn-primary' %>
         </div>
-      <% end %>
-    </div>
+      <% end %>      
+    </div>     
   </div>
+  <%= render 'schedules/modal_reason_reject' %>
+  <%= render 'schedules/modal_reason_cancel' %>
 </div>
-<script>
-    function setValueInConfirmacao() {
-        var value = $('#form_agendamento #confirmado_agendamento').val();
-        var bool = value == 'true';
-        $('#form_agendamento #confirmado_agendamento').val(!bool)
-
-        if(!bool){
-            $('#text-confirmacao').text('- Confirmado');
-        }else{
-            $('#text-confirmacao').text('- Não Confirmado');
-        }
-    }
-    function setWhats(id) {
-        var checkBox;
-        var t=$('#telefone').val();
-        var t2=$('#telefone2').val();
-        if(id == 'telefone') {
-            checkBox = document.getElementById('telefone_whats1');
-            if(checkBox.checked){
-              if(t) {
-                
-                window.open('https://api.whatsapp.com/send?phone=55' + (id == 'telefone' ? apenasNumeros($('#telefone').val()) : apenasNumeros($('#telefone2').val())), '_blank');
-              }
-
-            }else{
-            var teste = '#tr-whats'+id;
-            $(teste).closest('tr').remove();
-          }
-
-        }else if(id == 'telefone2'){
-            checkBox = document.getElementById('telefone_whats2');
-
-            if(checkBox.checked){
-              if(t2) {
-                
-                window.open('https://api.whatsapp.com/send?phone=55' + (id == 'telefone' ? apenasNumeros($('#telefone').val()) : apenasNumeros($('#telefone2').val())), '_blank');
-              }
-
-            }else{
-            var teste = '#tr-whats'+id;
-            $(teste).closest('tr').remove();
-          }
-            
-        }
-    
-        
-    }
-</script>
 

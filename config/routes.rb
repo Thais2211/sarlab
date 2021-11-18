@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     collection do
       get 'get_schedules'
       post 'save_schedule'
+      post 'aprovar'
+      post 'reject'
+      post 'cancel'
     end
   end
     

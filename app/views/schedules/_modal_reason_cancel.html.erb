@@ -1,0 +1,27 @@
+<div class="modal fade" id="modal_reason_cancel" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog " style="padding-top: 52px !important;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" > Motivo </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form class="form-horizontal">
+        <div class="modal-body">
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <%= text_area_tag 'reason_cancel', nil, class:"custom-select-sm form-control" %>
+            </div>
+          </div>          
+        </div>  
+        <div class="modal-footer">            
+          <button type="button" class="btn btn-danger" onclick="cancelarReserva()" >Continuar </button>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Fechar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+

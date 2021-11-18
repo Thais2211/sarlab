@@ -7,6 +7,13 @@
 
 
 $(document).ready(function () {
+  $('#datetimepicker1').datetimepicker({
+    format: 'dd/mm/yyyy hh:ii',
+    language: 'pt-BR',
+    autoclose: true,
+    todayBtn: true,
+    pickerPosition: "bottom-left"
+  });
 
   $('#laboratory_id').on('change', function () {      
     $('#equipament_id').html('');
@@ -27,6 +34,31 @@ $(document).ready(function () {
       });
     }
   });
+
+  $('#btnSalvarAgendamento').click(function () {
+    $.ajax({
+      url: '/schedules/save_schedule',
+      data: { start: $('#agendamento #start').val(), end: $('#agendamento #end').val(), 
+              laboratory_id: $('#agendamento #laboratory_id').val(), equipament_id: $('#agendamento #equipament_id').val(),
+              type_reservation_id: $('#agendamento #type_reservation_id').val(),
+      },
+      type: 'POST',
+      success: function (data) {
+          exibirMsg("agendamento realizado");
+          window.location.reload();
+      },error: function(data){
+          //exibirErro(data);
+      }
+    });
+  })
+
+  $('#btnRejeitarReserva').click(function () {
+    $('#modal_reason_reject').modal('show');
+  })
+
+  $('#btnCancelarReserva').click(function () {
+    $('#modal_reason_cancel').modal('show');
+  })
 
   $('#btnSalvarAgendamento').click(function () {
     $.ajax({
@@ -70,6 +102,10 @@ $(document).ready(function () {
         $('#agendamento #end').text(moment(end).format("DD/MM/YYYY HH:mm"));
         $('#agendamento #end').val(moment(end).format("DD/MM/YYYY HH:mm"));
 
+        document.getElementById('btnSalvarAgendamento').style.display = 'inline';
+        document.getElementById('btnAprovarReserva').style.display = 'none';
+        document.getElementById('btnRejeitarReserva').style.display = 'none';
+        document.getElementById('btnCancelarReserva').style.display = 'none';
         $('#agendamento').modal('show');
     },
     eventClick: function(calEvent, jsEvent, view) {
@@ -138,6 +174,145 @@ $(document).ready(function () {
 
 function showAgendamento(calEvent){
   console.log(calEvent);
+  console.log(moment(calEvent['start']).format("DD/MM/YYYY HH:mm"));
+  console.log(moment(calEvent['end']).format("DD/MM/YYYY HH:mm"));
+  //limparForm();
+  $('#agendamento #id').val(calEvent['id']);
+  $('#agendamento #start').val(moment(calEvent['start']).format("DD/MM/YYYY HH:mm"));
+  $('#agendamento #end').val(moment(calEvent['end']).format("DD/MM/YYYY HH:mm"));
+  $('#agendamento #laboratory_id').val(calEvent['laboratory']['id']).trigger("chosen:updated");
+
+  if(calEvent['equipament'] != null){
+    $('#agendamento #equipament').val(calEvent['equipament']['id']).trigger("chosen:updated");
+  }
+  
+  $('#agendamento #type_reservation_id').val(calEvent['type_reservation']['id']).trigger("chosen:updated");
+  $('#agendamento #status').val(calEvent['status']).trigger("chosen:updated");
+
+  if (calEvent['status'] == 'PENDENTE'){
+    document.getElementById('btnAprovarReserva').style.display = 'inline';
+    document.getElementById('btnRejeitarReserva').style.display = 'inline';
+    document.getElementById('btnCancelarReserva').style.display = 'none';
+    document.getElementById('btnSalvarAgendamento').style.display = 'inline';
+  }else if (calEvent['status'] == 'APROVADO'){
+    document.getElementById('btnAprovarReserva').style.display = 'none';
+    document.getElementById('btnRejeitarReserva').style.display = 'none';
+    document.getElementById('btnCancelarReserva').style.display = 'inline';
+    document.getElementById('btnSalvarAgendamento').style.display = 'none';
+  }else if (calEvent['status'] == 'CANCELADO'){
+    document.getElementById('btnAprovarReserva').style.display = 'none';
+    document.getElementById('btnRejeitarReserva').style.display = 'none';
+    document.getElementById('btnCancelarReserva').style.display = 'none';
+    document.getElementById('btnSalvarAgendamento').style.display = 'none';
+  }
+
   $('#agendamento').modal('show');
+}
+
+function getFormAgendamento(){
+  form = new FormData();
+  form.append('id', $("#id").val());
+  form.append('start', $("#start").val());
+  form.append('end', $("#end").val());
+  form.append('laboratory_id', $("#laboratory_id").val());
+  form.append('equipament_id', $("#equipament_id").val());
+  form.append('type_reservation_id', $("#type_reservation_id").val());
+  form.append('motivo_reject', $("#modal_reason_reject #reason_rejected").val());
+  form.append('motivo_cancel', $("#modal_reason_cancel #reason_cancel").val());
+
+  return form;
+}
+
+function aprovarReserva(){
+  $.ajax({
+    url: '/schedules/aprovar/',
+    data: getFormAgendamento(),
+    processData: false,
+    contentType: false,
+    type: 'POST',
+    success: function (data) {
+      //$('#agendamento').modal('hide');
+      $('#agendamento #status').val(data['status']).trigger("chosen:updated");
+      exibirMsg('Reserva aprovado com sucesso.');
+      $('body').lmask('hide');
+        
+    },error: function(data){
+        if(data['responseJSON'] == 'AGENDAMENTO_NAO_ENCONTRADO'){
+            exibirErro('Reserva não encontrada.');
+        }else if(data['responseJSON'] == 'HORARIO_INICIO_MAIOR') {
+            exibirErro('Horário de início não pode ser maior que data final.');
+        }else if(data['responseJSON'] != null){
+            exibirErro(data['responseJSON']);
+        }else{
+            exibirErro('Ocorreu algum erro.');
+        }
+        $('body').lmask('hide');
+    }
+  });
+  return false;
+}
+
+function rejeitarReserva(){
+  $.ajax({
+    url: '/schedules/reject/',
+    data: getFormAgendamento(),
+    processData: false,
+    contentType: false,
+    type: 'POST',
+    success: function (data) {      
+      $('#agendamento #status').val(data['status']).trigger("chosen:updated");
+      $('#modal_reason_reject').modal('hide');
+      $('#agendamento').modal('hide');
+      exibirMsg('Reserva rejeitada com sucesso.');
+      $('body').lmask('hide');
+        
+    },error: function(data){
+        if(data['responseJSON'] == 'AGENDAMENTO_NAO_ENCONTRADO'){
+            exibirErro('Reserva não encontrada.');
+        }else if(data['responseJSON'] == 'HORARIO_INICIO_MAIOR') {
+            exibirErro('Horário de início não pode ser maior que data final.');
+        }else if(data['responseJSON'] == 'MOTIVO_NOT_NULL') {
+          exibirErro('Motivo é obrigatório.');
+        }else if(data['responseJSON'] != null){
+            exibirErro(data['responseJSON']);
+        }else{
+            exibirErro('Ocorreu algum erro.');
+        }
+        $('body').lmask('hide');
+    }
+  });
+  return false;
+}
+
+function cancelarReserva(){
+  $.ajax({
+    url: '/schedules/cancel/',
+    data: getFormAgendamento(),
+    processData: false,
+    contentType: false,
+    type: 'POST',
+    success: function (data) {      
+      $('#agendamento #status').val(data['status']).trigger("chosen:updated");
+      $('#modal_reason_cancel').modal('hide');
+      $('#agendamento').modal('hide');
+      exibirMsg('Reserva cancelada com sucesso.');
+      $('body').lmask('hide');
+        
+    },error: function(data){
+        if(data['responseJSON'] == 'AGENDAMENTO_NAO_ENCONTRADO'){
+            exibirErro('Reserva não encontrada.');
+        }else if(data['responseJSON'] == 'HORARIO_INICIO_MAIOR') {
+            exibirErro('Horário de início não pode ser maior que data final.');
+        }else if(data['responseJSON'] == 'MOTIVO_NOT_NULL') {
+          exibirErro('Motivo é obrigatório.');
+        }else if(data['responseJSON'] != null){
+            exibirErro(data['responseJSON']);
+        }else{
+            exibirErro('Ocorreu algum erro.');
+        }
+        $('body').lmask('hide');
+    }
+  });
+  return false;
 }
   

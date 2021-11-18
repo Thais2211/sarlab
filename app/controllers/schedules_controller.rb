@@ -72,9 +72,92 @@ class SchedulesController < ApplicationController
   def save_schedule
     schedule = Schedule.new(start: params[:start], end: params[:end], status: 'PENDENTE', laboratory_id: params[:laboratory_id], 
                 equipament_id: params[:equipament_id], type_reservation_id: params[:type_reservation_id], user: current_user)
-    schedule.save!
+    if schedule.save!
+      redirect_to schedules_path, notice:'Reserva cadastrada com sucesso'
+    end
+    #render json: schedule
+    
+  end
 
-    render json: schedule
+  def aprovar 
+    @schedule = nil
+    if params[:id].present?
+      @schedule = Schedule.find params[:id]
+
+      @schedule.status = 'APROVADO'
+
+      #Se datas estiverem incorretas
+      return render json: 'HORARIO_INICIO_MAIOR'.to_json, :status => 422 if Time.parse(params[:start]) >= Time.parse(params[:end])
+      
+    else
+      return render json: 'AGENDAMENTO_NAO_ENCONTRADO'.to_json, :status => 422
+    end
+
+    if @schedule.save
+      @schedule.update(admin_aproved: current_user.id)
+      render json: @schedule
+    else
+      render json: @schedule.errors
+    end
+
+  end
+
+  def reject 
+    @schedule = nil
+    if params[:id].present?
+      @schedule = Schedule.find params[:id]
+
+      @schedule.status = 'REJEITADO'
+      
+      if params[:motivo_reject].present?
+        @schedule.reason_rejected = params[:motivo_reject]
+      else
+        return render json: 'MOTIVO_NOT_NULL'.to_json, status: 422
+      end
+
+      #Se datas estiverem incorretas
+      return render json: 'HORARIO_INICIO_MAIOR'.to_json, :status => 422 if Time.parse(params[:start]) >= Time.parse(params[:end])
+      
+    else
+      return render json: 'AGENDAMENTO_NAO_ENCONTRADO'.to_json, :status => 422
+    end
+
+    if @schedule.save
+      @schedule.update(admin_rejected: current_user.id)
+      render json: @schedule
+    else
+      render json: @schedule.errors
+    end
+
+  end
+
+  def cancel 
+    @schedule = nil
+    if params[:id].present?
+      @schedule = Schedule.find params[:id]
+
+      @schedule.status = 'CANCELADO'
+      
+      if params[:motivo_cancel].present?
+        @schedule.reason_cancel = params[:motivo_cancel]
+      else
+        return render json: 'MOTIVO_NOT_NULL'.to_json, status: 422
+      end
+
+      #Se datas estiverem incorretas
+      return render json: 'HORARIO_INICIO_MAIOR'.to_json, :status => 422 if Time.parse(params[:start]) >= Time.parse(params[:end])
+      
+    else
+      return render json: 'AGENDAMENTO_NAO_ENCONTRADO'.to_json, :status => 422
+    end
+
+    if @schedule.save
+      @schedule.update(admin_cancel: current_user.id)
+      render json: @schedule
+    else
+      render json: @schedule.errors
+    end
+
   end
 
   private

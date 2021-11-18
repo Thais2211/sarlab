@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_07_045833) do
+ActiveRecord::Schema.define(version: 2021_09_27_142053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 2021_09_07_045833) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active", default: true
+    t.string "reason_rejected"
+    t.string "reason_cancel"
     t.index ["escola_id"], name: "index_disciplinas_on_escola_id"
     t.index ["professor_id"], name: "index_disciplinas_on_professor_id"
   end
@@ -114,10 +116,14 @@ ActiveRecord::Schema.define(version: 2021_09_07_045833) do
     t.bigint "user_id"
     t.string "status"
     t.bigint "type_reservation_id"
-    t.integer "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "lesson_id"
+    t.integer "admin_aproved"
+    t.string "reason_rejected"
+    t.integer "admin_rejected"
+    t.string "reason_cancel"
+    t.integer "admin_cancel"
     t.index ["equipament_id"], name: "index_schedules_on_equipament_id"
     t.index ["laboratory_id"], name: "index_schedules_on_laboratory_id"
     t.index ["type_reservation_id"], name: "index_schedules_on_type_reservation_id"
