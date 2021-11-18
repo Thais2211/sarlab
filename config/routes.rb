@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       post 'aprovar'
       post 'reject'
       post 'cancel'
+      get 'activities'
     end
   end
     

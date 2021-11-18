@@ -206,6 +206,8 @@ function showAgendamento(calEvent){
     document.getElementById('btnSalvarAgendamento').style.display = 'none';
   }
 
+  buscarAtividades(calEvent['id']);
+  
   $('#agendamento').modal('show');
 }
 
@@ -316,3 +318,15 @@ function cancelarReserva(){
   return false;
 }
   
+function buscarAtividades(id) {
+  $.ajax({
+      url: '/schedules/activities',
+      data: {id: id},
+      type: 'GET',
+      success: function (data) {
+          $("#activities_agendamento").html(data);
+      },error: function(data){
+          exibirErro(data);
+      }
+  });
+}

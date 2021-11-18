@@ -1,4 +1,6 @@
 class Schedule < ApplicationRecord
+  include PublicActivity::Model
+
   belongs_to :equipament, optional: true
   belongs_to :laboratory
   belongs_to :user

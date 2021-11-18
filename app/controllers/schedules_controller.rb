@@ -73,6 +73,7 @@ class SchedulesController < ApplicationController
     schedule = Schedule.new(start: params[:start], end: params[:end], status: 'PENDENTE', laboratory_id: params[:laboratory_id], 
                 equipament_id: params[:equipament_id], type_reservation_id: params[:type_reservation_id], user: current_user)
     if schedule.save!
+      schedule.create_activity(:solicitou_reserva, owner: current_user, recipient: schedule , params: {responsavel: schedule.user_id})
       redirect_to schedules_path, notice:'Reserva cadastrada com sucesso'
     end
     #render json: schedule
@@ -95,6 +96,7 @@ class SchedulesController < ApplicationController
 
     if @schedule.save
       @schedule.update(admin_aproved: current_user.id)
+      @schedule.create_activity(:aprovou_reserva, owner: current_user, recipient: @schedule)
       render json: @schedule
     else
       render json: @schedule.errors
@@ -124,6 +126,7 @@ class SchedulesController < ApplicationController
 
     if @schedule.save
       @schedule.update(admin_rejected: current_user.id)
+      @schedule.create_activity(:rejeitou_reserva, owner: current_user, recipient: @schedule , params: {motivo: @schedule.reason_rejected})
       render json: @schedule
     else
       render json: @schedule.errors
@@ -153,11 +156,19 @@ class SchedulesController < ApplicationController
 
     if @schedule.save
       @schedule.update(admin_cancel: current_user.id)
+      @schedule.create_activity(:cancelou_reserva, owner: current_user, recipient: @schedule , params: {motivo: @schedule.reason_cancel})
       render json: @schedule
     else
       render json: @schedule.errors
     end
 
+  end
+
+  def activities
+    agenda = Schedule.find params[:id]
+    @activities = PublicActivity::Activity.where(recipient_id: agenda.id, recipient_type: "Schedule").order("created_at desc")
+   
+    render :partial => 'schedules/activities_agendamento'
   end
 
   private
