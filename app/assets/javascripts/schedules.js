@@ -192,7 +192,7 @@ function showAgendamento(calEvent){
   if (calEvent['status'] == 'PENDENTE'){
     document.getElementById('btnAprovarReserva').style.display = 'inline';
     document.getElementById('btnRejeitarReserva').style.display = 'inline';
-    document.getElementById('btnCancelarReserva').style.display = 'none';
+    document.getElementById('btnCancelarReserva').style.display = 'none'; //SO MOSTRAR DEPOIS DE APROVADA
     document.getElementById('btnSalvarAgendamento').style.display = 'inline';
   }else if (calEvent['status'] == 'APROVADO'){
     document.getElementById('btnAprovarReserva').style.display = 'none';
@@ -200,6 +200,11 @@ function showAgendamento(calEvent){
     document.getElementById('btnCancelarReserva').style.display = 'inline';
     document.getElementById('btnSalvarAgendamento').style.display = 'none';
   }else if (calEvent['status'] == 'CANCELADO'){
+    document.getElementById('btnAprovarReserva').style.display = 'none';
+    document.getElementById('btnRejeitarReserva').style.display = 'none';
+    document.getElementById('btnCancelarReserva').style.display = 'none';
+    document.getElementById('btnSalvarAgendamento').style.display = 'none';
+  }else if (calEvent['status'] == 'REJEITADO'){
     document.getElementById('btnAprovarReserva').style.display = 'none';
     document.getElementById('btnRejeitarReserva').style.display = 'none';
     document.getElementById('btnCancelarReserva').style.display = 'none';
