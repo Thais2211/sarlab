@@ -18,4 +18,4 @@ production:
   database: Reservas_production
   username: Reservas
   #password: <%= ENV['RESERVAS_DATABASE_PASSWORD'] %>
-  password: thais2218
+  password: q27pptz8
