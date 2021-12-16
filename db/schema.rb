@@ -51,8 +51,6 @@ ActiveRecord::Schema.define(version: 2021_11_18_024539) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active", default: true
-    t.string "reason_rejected"
-    t.string "reason_cancel"
     t.index ["escola_id"], name: "index_disciplinas_on_escola_id"
     t.index ["professor_id"], name: "index_disciplinas_on_professor_id"
   end
