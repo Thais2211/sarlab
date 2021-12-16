@@ -107,6 +107,4 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  RAILS_MASTER_KEY=b5e574a6ea7cd9f8b21454f468bc34bc
 end
