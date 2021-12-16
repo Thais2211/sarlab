@@ -50,6 +50,6 @@ development:
 #
 production:
   <<: *default
-  database: Reservas_production
+  database: reservas_production
   username: postgres
   password: q27pptz8
