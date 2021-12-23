@@ -1,0 +1,1 @@
+function open_modal_edit_tipo(o,i){$("#modalEditTipo #id").val(o),$("#modalEditTipo #description").val(i),$("#modalEditTipo").modal("show")}$(document).ready(function(){$("#btn_novo_tipo_reserva").click(function(){$("#modalNewType").modal("show")})});
