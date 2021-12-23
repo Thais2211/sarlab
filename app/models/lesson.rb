@@ -2,6 +2,8 @@ class Lesson < ApplicationRecord
   belongs_to :laboratory
   belongs_to :disciplina
   has_many :anexos, foreign_key: 'anexo_id'
+  
+  #mount_uploader :solicitacao_aula, SolicitacaoAulaUploader
 
   def self.week_day(day)
     case day

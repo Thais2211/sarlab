@@ -11,3 +11,23 @@ $(document).ready(function () {
     });
   });
 })
+
+function toggle_eqp(id){
+  $.ajax({
+    url: '/equipaments/toggle_eqp',
+    data: {id: id
+          },
+    type: 'POST',
+    success: function (data) {
+      if(data['active'] == true)
+        exibirMsg("Equipamento ativado com sucesso.");
+      else
+        exibirMsg("Equipamento desativado com sucesso.");
+
+      window.location.reload();
+    },error: function(data) {
+      console.log('errors');
+      exibirErro('Ocorreu algum erro.');
+    }
+  });
+}

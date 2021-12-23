@@ -25,11 +25,21 @@
             <div class="form-group row">
               <div class="col-sm-6">
                 <%= f.label :laboratory_id_eq, 'Laboratório'  %>
-                <%= f.collection_select :laboratory_id_eq, Laboratory.all.order(:name), :id, :name, {include_blank: true}, {class: "h-38"} %>
+                <%= f.collection_select :laboratory_id_eq, Laboratory.all.order(:name), :id, :name, {include_blank: true} %>
               </div>         
               <div class="col-sm-6">
-                <%= f.label :name_cont, 'Nome equipamento'  %>
-                <%= f.text_field :name_cont, class: 'form-control form-control' %>
+                <%= f.label :name_cont, 'Nome'  %>
+                <%= f.text_field :name_cont, class: 'w-80' %>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-6">
+                <%= f.label :active, "Todos", :value => "todos"  %>
+                <%= f.radio_button :active, nil, :checked => true %>
+                <%= f.label :active, "Ativos", :value => "true", class:"pd-10"  %>
+                <%= f.radio_button :active, true %>
+                <%= f.label :active, "Desativados", :value => "false", class:"pd-10" %>
+                <%= f.radio_button :active, false %>
               </div>
             </div>
 
@@ -69,6 +79,11 @@
               <hr>  
                 <%= link_to 'Exibir', equipament_path(eqp),  class:"btn btn-success btn-sm" %>          
                 <%= link_to 'Editar', edit_equipament_path(eqp), :class => 'btn btn-primary btn-sm' %>
+                <% if eqp.active %>
+                  <button class="btn btn-warning btn-sm" type="button" onclick="toggle_eqp(<%= eqp.id %>)">Desativar</button>
+                <% else %>
+                  <button class="btn btn-success btn-sm" type="button" onclick="toggle_eqp(<%= eqp.id %>)">Ativar</button>
+                <% end %>
               </div>
           </div>
         </div>
@@ -79,5 +94,11 @@
 <style>
   .h-38{ 
     height: 38px !important;
+  }
+  .w-80{
+    width: 80%
+  }
+  .pd-10{
+    padding-left: 10px
   }
 </style>

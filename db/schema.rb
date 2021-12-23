@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_18_010228) do
+ActiveRecord::Schema.define(version: 2021_11_18_024539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.string "trackable_type"
+    t.bigint "trackable_id"
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.string "key"
+    t.text "parameters"
+    t.string "recipient_type"
+    t.bigint "recipient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
+    t.index ["owner_type", "owner_id"], name: "index_activities_on_owner_type_and_owner_id"
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
+    t.index ["recipient_type", "recipient_id"], name: "index_activities_on_recipient_type_and_recipient_id"
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+    t.index ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id"
+  end
 
   create_table "anexos", force: :cascade do |t|
     t.integer "equipament_id"
@@ -31,6 +50,7 @@ ActiveRecord::Schema.define(version: 2021_08_18_010228) do
     t.bigint "escola_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true
     t.index ["escola_id"], name: "index_disciplinas_on_escola_id"
     t.index ["professor_id"], name: "index_disciplinas_on_professor_id"
   end
@@ -47,6 +67,7 @@ ActiveRecord::Schema.define(version: 2021_08_18_010228) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
+    t.boolean "active", default: true
     t.index ["laboratory_id"], name: "index_equipaments_on_laboratory_id"
   end
 
@@ -74,23 +95,19 @@ ActiveRecord::Schema.define(version: 2021_08_18_010228) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.date "date_start"
-    t.date "date_end"
+    t.date "data"
+    t.time "start_time"
+    t.time "end_time"
     t.bigint "laboratory_id"
-    t.string "day1"
-    t.time "hour1_start"
-    t.time "hour1_end"
-    t.string "day2"
-    t.time "hour2_start"
-    t.time "hour2_end"
-    t.string "day3"
-    t.time "hour3_start"
-    t.time "hour3_end"
+    t.bigint "disciplina_id"
+    t.boolean "review", default: false
+    t.bigint "users_id"
+    t.date "date_review"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "disciplina_id"
     t.index ["disciplina_id"], name: "index_lessons_on_disciplina_id"
     t.index ["laboratory_id"], name: "index_lessons_on_laboratory_id"
+    t.index ["users_id"], name: "index_lessons_on_users_id"
   end
 
   create_table "logged_exceptions", force: :cascade do |t|
@@ -116,9 +133,14 @@ ActiveRecord::Schema.define(version: 2021_08_18_010228) do
     t.bigint "user_id"
     t.string "status"
     t.bigint "type_reservation_id"
-    t.integer "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "lesson_id"
+    t.integer "admin_aproved"
+    t.string "reason_rejected"
+    t.integer "admin_rejected"
+    t.string "reason_cancel"
+    t.integer "admin_cancel"
     t.index ["equipament_id"], name: "index_schedules_on_equipament_id"
     t.index ["laboratory_id"], name: "index_schedules_on_laboratory_id"
     t.index ["type_reservation_id"], name: "index_schedules_on_type_reservation_id"

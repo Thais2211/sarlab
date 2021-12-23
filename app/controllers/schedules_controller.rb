@@ -10,6 +10,7 @@ class SchedulesController < ApplicationController
   # GET /schedules/1
   # GET /schedules/1.json
   def show
+    render json: @schedule
   end
 
   # GET /schedules/new
@@ -71,9 +72,113 @@ class SchedulesController < ApplicationController
   def save_schedule
     schedule = Schedule.new(start: params[:start], end: params[:end], status: 'PENDENTE', laboratory_id: params[:laboratory_id], 
                 equipament_id: params[:equipament_id], type_reservation_id: params[:type_reservation_id], user: current_user)
-    schedule.save!
+    if schedule.save!
+      schedule.create_activity(:solicitou_reserva, owner: current_user, recipient: schedule , params: {responsavel: schedule.user_id})
+      
+      ScheduleMailer.new_agendamento("thaismayara.tmsb@gmail.com").deliver_now!
+      redirect_to schedules_path, notice:'Reserva cadastrada com sucesso'
+    end
+    #render json: schedule
+    
+  end
 
-    render json: schedule
+  def aprovar 
+    @schedule = nil
+    if params[:id].present?
+      @schedule = Schedule.find params[:id]
+
+      @schedule.status = 'APROVADO'
+
+      #Se datas estiverem incorretas
+      return render json: 'HORARIO_INICIO_MAIOR'.to_json, :status => 422 if Time.parse(params[:start]) >= Time.parse(params[:end])
+      
+    else
+      return render json: 'AGENDAMENTO_NAO_ENCONTRADO'.to_json, :status => 422
+    end
+
+    if @schedule.save
+      @schedule.update(admin_aproved: current_user.id)
+      @schedule.create_activity(:aprovou_reserva, owner: current_user, recipient: @schedule)
+      ScheduleMailer.status_reserva("thaismayara.tmsb@gmail.com", "aprovada", nil ).deliver
+
+      render json: @schedule
+    else
+      render json: @schedule.errors
+    end
+
+  end
+
+  def reject 
+    @schedule = nil
+    if params[:id].present?
+      @schedule = Schedule.find params[:id]
+
+      @schedule.status = 'REJEITADO'
+      
+      if params[:motivo_reject].present?
+        @schedule.reason_rejected = params[:motivo_reject]
+      else
+        return render json: 'MOTIVO_NOT_NULL'.to_json, status: 422
+      end
+
+      #Se datas estiverem incorretas
+      return render json: 'HORARIO_INICIO_MAIOR'.to_json, :status => 422 if Time.parse(params[:start]) >= Time.parse(params[:end])
+      
+    else
+      return render json: 'AGENDAMENTO_NAO_ENCONTRADO'.to_json, :status => 422
+    end
+
+    if @schedule.save
+      @schedule.update(admin_rejected: current_user.id)
+      @schedule.create_activity(:rejeitou_reserva, owner: current_user, recipient: @schedule , params: {motivo: @schedule.reason_rejected})
+      
+      ScheduleMailer.status_reserva("thaismayara.tmsb@gmail.com", "rejeitada", @schedule.reason_rejected).deliver
+
+      render json: @schedule
+    else
+      render json: @schedule.errors
+    end
+
+  end
+
+  def cancel 
+    @schedule = nil
+    if params[:id].present?
+      @schedule = Schedule.find params[:id]
+
+      @schedule.status = 'CANCELADO'
+      
+      if params[:motivo_cancel].present?
+        @schedule.reason_cancel = params[:motivo_cancel]
+      else
+        return render json: 'MOTIVO_NOT_NULL'.to_json, status: 422
+      end
+
+      #Se datas estiverem incorretas
+      return render json: 'HORARIO_INICIO_MAIOR'.to_json, :status => 422 if Time.parse(params[:start]) >= Time.parse(params[:end])
+      
+    else
+      return render json: 'AGENDAMENTO_NAO_ENCONTRADO'.to_json, :status => 422
+    end
+
+    if @schedule.save
+      @schedule.update(admin_cancel: current_user.id)
+      @schedule.create_activity(:cancelou_reserva, owner: current_user, recipient: @schedule , params: {motivo: @schedule.reason_cancel})
+      
+      ScheduleMailer.status_reserva("thaismayara.tmsb@gmail.com", "cancelada", @schedule.reason_cancel).deliver
+
+      render json: @schedule
+    else
+      render json: @schedule.errors
+    end
+
+  end
+
+  def activities
+    agenda = Schedule.find params[:id]
+    @activities = PublicActivity::Activity.where(recipient_id: agenda.id, recipient_type: "Schedule").order("created_at desc")
+   
+    render :partial => 'schedules/activities_agendamento'
   end
 
   private

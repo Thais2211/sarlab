@@ -7,18 +7,8 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <%= form_tag('/lessons/new_lesson', method: :post) do %>
+      <form class="form-horizontal" id="form_lesson">
         <div class="modal-body">
-          <div class="form-group row">
-            <div class="col-sm-6" >
-              <%= label_tag 'date_start', 'Data inicial' %>
-              <%= date_field_tag :date_start, Time.now.beginning_of_month.strftime("%Y-%m-%d"), class: 'form-control form-control' %>
-            </div>
-            <div class="col-sm-6" >
-              <%= label_tag 'date_end', 'Data final' %>
-              <%= date_field_tag :date_end, Time.now.end_of_month.strftime("%Y-%m-%d"), class: 'form-control form-control' %>
-            </div>
-          </div>
           <div class="form-group row">
             <div class="col-sm-6">
               <%= label_tag 'Disciplina', nil %>
@@ -26,70 +16,35 @@
             </div>
             <div class="col-sm-6">
               <%= label_tag 'Laboratório', nil %>
-              <%= select_tag 'laboratory_id', options_for_select(Laboratory.all.order(:name).collect {|p| [p.name, p.id]}), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um professor'}, :include_blank => true} %>
-            </div>
-          </div>
-          <h5> Cronograma: </h5>
-          <div class="form-group row">
-            <div class="col-sm-6">
-              <%= select_tag 'day1', options_for_select([['Segunda','seg'],
-                                                         ['Terça', 'ter'],
-                                                         ['Quarta', 'qua'],
-                                                         ['Quinta', 'qui'],
-                                                         ['Sexta', 'sex'],
-                                                         ['Sábado', 'sab'],
-                                                        ], 'seg'), 
-                                                          {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um dia'}, :include_blank => true} %>
-            </div>
-            <div class="col-sm-3">
-              <%= time_field_tag :hour1_start, nil,  class: 'form-control form-control'%>
-            </div>
-            <div class="col-sm-3">
-              <%= time_field_tag :hour1_end, nil,  class: 'form-control form-control'%>
+              <%= select_tag 'laboratory_id', options_for_select(Laboratory.where(active: true).order(:name).collect {|p| [p.name, p.id]}), {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um professor'}, :include_blank => true} %>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-sm-6">
-              <%= select_tag 'day2', options_for_select([['Segunda','seg'],
-                                                         ['Terça', 'ter'],
-                                                         ['Quarta', 'qua'],
-                                                         ['Quinta', 'qui'],
-                                                         ['Sexta', 'sex'],
-                                                         ['Sábado', 'sab'],
-                                                        ]), 
-                                                          {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um dia'}, :include_blank => true} %>
+            <div class="col-sm-6" >
+              <%= label_tag 'data', 'Data' %>
+              <%= date_field_tag 'data', Time.now.strftime("%Y-%m-%d"), class: 'form-control form-control' %>
             </div>
             <div class="col-sm-3">
-              <%= time_field_tag :hour2_start, nil,  class: 'form-control form-control'%>
+              <%= label_tag 'Hora inicio', nil %>
+              <%= time_field_tag 'start_time', nil,  class: 'form-control form-control'%>
             </div>
             <div class="col-sm-3">
-              <%= time_field_tag :hour2_end, nil,  class: 'form-control form-control'%>
+              <%= label_tag 'Hora fim', nil %>
+              <%= time_field_tag 'end_time', nil,  class: 'form-control form-control'%>
             </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-6">
-              <%= select_tag 'day3', options_for_select([['Segunda','seg'],
-                                                         ['Terça', 'ter'],
-                                                         ['Quarta', 'qua'],
-                                                         ['Quinta', 'qui'],
-                                                         ['Sexta', 'sex'],
-                                                         ['Sábado', 'sab'],
-                                                        ]), 
-                                                          {:class => "custom-select-sm form-control", :data => {:placeholder => 'Selecione um dia'}, :include_blank => true} %>
+          </div>  
+          <%# <div class="form-group row">
+            <%= label_tag 'solicitacao_aula', 'Anexar solicitação de aula', class: 'col-12 control-label'  
+            <div class="col-sm-12">          
+              <%= file_field_tag 'lessom[solicitacao_aula]', class: 'form-control form-control'
             </div>
-            <div class="col-sm-3">
-              <%= time_field_tag :hour3_start, nil,  class: 'form-control form-control'%>
-            </div>
-            <div class="col-sm-3">
-              <%= time_field_tag :hour3_end, nil,  class: 'form-control form-control'%>
-            </div>
-          </div>      
+          </div>    %>
         </div>  
         <div class="modal-footer">            
-          <%= submit_tag 'Salvar', :class => 'btn btn-primary'%>
+          <%= submit_tag 'Salvar', :type=>'button', :id=> 'btn_create_lesson', :class => 'btn btn-primary'%>
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
         </div>
-      <% end %>
+      </form>
     </div>
   </div>
 </div> 

@@ -1,62 +1,53 @@
-<%= form_with(model: lessom, local: true) do |form| %>
-  <% if lessom.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(lessom.errors.count, "error") %> prohibited this lessom from being saved:</h2>
+<div class="card o-hidden border-0 shadow-lg my-3">
+  <div class="card-body">
+    <%= form_with(model: lessom, local: true) do |form| %>
+      <% if lessom.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(lessom.errors.count, "error") %> erros:</h2>
 
-      <ul>
-      <% lessom.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+          <% lessom.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :date_start %>
-    <%= form.date_select :date_start %>
-  </div>
+      <div class="form-group row">
+        <%= form.label 'disciplina_id', 'Disciplina', class: 'col-2 control-label padding' %>
+        <div class="col-sm-4"> 
+          <%= form.collection_select :disciplina_id, Disciplina.where(active: true), :id, :nome,
+                                                {class: 'form-control input-sm'} %>
+        </div>
+        <%= form.label 'laboratory_id', 'Laboratório', class: 'col-2 control-label padding' %>
+        <div class="col-sm-4"> 
+          <%= form.collection_select :laboratory_id, Laboratory.where(active: true), :id, :name,
+                                                {class: 'form-control input-sm'} %>
+        </div>
+      </div>
 
-  <div class="field">
-    <%= form.label :date_end %>
-    <%= form.date_select :date_end %>
-  </div>
+      <div class="form-group row">
+        <%= form.label 'data', 'Data', class: 'col-1 control-label padding' %>
+        <div class="col-sm-3"> 
+          <%= form.date_field :data, class: 'form-control input-sm' %>
+        </div>
+        <%= form.label 'start_time', 'Hora inicio', class: 'col-2 control-label padding' %>
+        <div class="col-sm-2"> 
+          <%= form.time_field :start_time, class: 'form-control input-sm' %>
+        </div>
+        <%= form.label 'end_time', 'Hora fim', class: 'col-2 control-label padding' %>
+        <div class="col-sm-2"> 
+          <%= form.time_field :end_time, class: 'form-control input-sm' %>
+        </div>
+      </div>
 
-  <div class="field">
-    <%= form.label :laboratory_id %>
-    <%= form.text_field :laboratory_id %>
+      <div class="actions">
+        <%= form.submit 'Salvar', :class => 'btn btn-primary'%>
+        <% unless @lessom.review %>
+          <button class="btn btn-success" type="button" onclick="review_lesson(<%= @lessom.id %>)">Conferir</button>
+        <% end %>
+        <%= link_to 'Cancelar', lessons_path, :class => 'btn btn-secondary' %>
+      </div>
+    <% end %>
   </div>
-
-  <div class="field">
-    <%= form.label :day1 %>
-    <%= form.text_field :day1 %>
-  </div>
-
-  <div class="field">
-    <%= form.label :hour1 %>
-    <%= form.time_select :hour1 %>
-  </div>
-
-  <div class="field">
-    <%= form.label :day2 %>
-    <%= form.text_field :day2 %>
-  </div>
-
-  <div class="field">
-    <%= form.label :hour2 %>
-    <%= form.time_select :hour2 %>
-  </div>
-
-  <div class="field">
-    <%= form.label :day3 %>
-    <%= form.text_field :day3 %>
-  </div>
-
-  <div class="field">
-    <%= form.label :hour3 %>
-    <%= form.time_select :hour3 %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

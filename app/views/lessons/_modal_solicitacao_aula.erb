@@ -1,0 +1,31 @@
+<div class="modal fade" id="modalAnexarSolicitacaoAula" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog w-700">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" > Anexar Solicitação Aula </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <form controller="/lessons" action="/upload" id="mediadropzone" class="dropzone" enctype="multipart/form-data">
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+              <%= hidden_field_tag 'lesson_id', nil %>
+              <div class="dz-message">    
+                Arraste a SOLICITAÇÃO DE AULA ou clique para fazer upload
+              </div>
+              <div class="fallback">
+                <input name="media" type="file" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">            
+        <button class="btn btn-primary" type="button" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div> 

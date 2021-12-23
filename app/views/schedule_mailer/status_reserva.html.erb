@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h4>Olá, </h4>
+    <p>
+      Sua reserva foi <%= @status %>.
+      <br>
+    </p>
+    <% if @motivo.present? %>
+        <p> Motivo: <%= @motivo%> </p>
+    <%  end %>
+    <br><br>  
+    
+  </body>
+</html>

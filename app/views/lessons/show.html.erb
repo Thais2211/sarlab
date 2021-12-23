@@ -1,49 +1,75 @@
-<p id="notice"><%= notice %></p>
+<div class="card o-hidden border-0 shadow-lg my-3">
+  <div class="card-body">
+    <div class="form-group row">
+      <%= label_tag 'Disciplina', 'Disciplina', class: 'col-2 control-label padding'  %>
+      <div class="col-sm-4">        
+        <%= text_field_tag :disciplina_id, @lessom.disciplina.nome, class: 'form-control form-control', readOnly: "true" %>
+      </div>
 
-<p>
-  <strong>Date start:</strong>
-  <%= @lessom.date_start %>
-</p>
+      <%= label_tag 'laboratory', 'Laboratório', class: 'col-2 control-label padding'  %>
+      <div class="col-sm-4">        
+        <%= text_field_tag :laboratory, @lessom.laboratory.name, class: 'form-control form-control', readOnly: "true" %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= label_tag 'data', 'Data', class: 'col-1 control-label padding'  %>
+      <div class="col-sm-3">        
+        <%= text_field_tag :data, @lessom.data.strftime('%d/%m/%Y'), class: 'form-control form-control', readOnly: "true" %>
+      </div>
 
-<p>
-  <strong>Date end:</strong>
-  <%= @lessom.date_end %>
-</p>
-
-<p>
-  <strong>Laboratory:</strong>
-  <%= @lessom.laboratory %>
-</p>
-
-<p>
-  <strong>Day1:</strong>
-  <%= @lessom.day1 %>
-</p>
-
-<p>
-  <strong>Hour1:</strong>
-  <%= @lessom.hour1 %>
-</p>
-
-<p>
-  <strong>Day2:</strong>
-  <%= @lessom.day2 %>
-</p>
-
-<p>
-  <strong>Hour2:</strong>
-  <%= @lessom.hour2 %>
-</p>
-
-<p>
-  <strong>Day3:</strong>
-  <%= @lessom.day3 %>
-</p>
-
-<p>
-  <strong>Hour3:</strong>
-  <%= @lessom.hour3 %>
-</p>
-
-<%= link_to 'Edit', edit_lessom_path(@lessom) %> |
-<%= link_to 'Back', lessons_path %>
+      <%= label_tag 'start_time', 'Hora inicio', class: 'col-2 control-label padding'  %>
+      <div class="col-sm-2">        
+        <%= text_field_tag :start_time, @lessom.start_time.strftime('%H:%M'), class: 'form-control form-control', readOnly: "true" %>
+      </div>
+      <%= label_tag 'end_time', 'Hora fim', class: 'col-2 control-label padding'  %>
+      <div class="col-sm-2">        
+        <%= text_field_tag :end_time, @lessom.end_time.strftime('%H:%M'), class: 'form-control form-control', readOnly: "true" %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <% if @lessom.review %>
+        <strong>Conferido por <%= @user.nome%></strong>      
+      <% end %>
+    </div>
+    
+    <div class="actions">
+      <%= link_to 'Editar', edit_lessom_path(@lessom), :class => 'btn btn-primary' %>
+      <% unless @lessom.review %>
+        <button class="btn btn-success" type="button" onclick="review_lesson(<%= @lessom.id %>)">Conferir</button>
+      <% end %>
+      <%= link_to 'Voltar', lessons_path, :class => 'btn btn-secondary' %>
+    </div>
+  </div>
+</div>
+<div class="card o-hidden border-0 shadow-lg my-3">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-6">
+        <form action="/upload" id="mediadropzone" class="dropzone" enctype="multipart/form-data">
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+          <%= hidden_field_tag 'lesson_id', @lessom.id %>
+          <div class="dz-message">    
+            Arraste a SOLICITAÇÃO DE AULA ou clique para fazer upload
+          </div>
+          <div class="fallback">
+          <input name="media" type="file" multiple />
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-6">
+        <h5><i class="fa fa-paperclip"> </i> Anexos</h5>
+        <% if @anexos.present? %>
+          <div class="col-sm-6">
+            <% @anexos.each do |att|%>
+              <div id="anexo-<%=att.id%>">
+                <i class="fa fa-file-text-o"></i> <%= link_to File.basename(att.file.path), {action: 'download_file', id: att.id, controller: 'upload'}, target: '_blank'  %>
+                <button style="font-size: 10px" type="button" class="btn btn-sm btn-danger" onclick="remover_anexo('<%= att.id %>')" ><i class="fa fa-trash"></i> </button>                                                  
+                <br />
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

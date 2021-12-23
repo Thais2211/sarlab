@@ -7,8 +7,12 @@ class EquipamentsController < ApplicationController
   def index
     @q = Equipament.ransack(params[:q])
     @equipaments = @q.result
-    
-    #@equipaments = Equipament.all    
+
+    if params[:q] && params[:q]['active'] == 'true'
+      @equipaments = @equipaments.where(active: true)
+    elsif params[:q] &&  params[:q]['active'] == 'false'
+      @equipaments = @equipaments.where(active: false)
+    end  
   end
 
   # GET /equipaments/1
@@ -75,6 +79,14 @@ class EquipamentsController < ApplicationController
     equipaments = Equipament.where(laboratory_id: params[:lab])
     
     render json: equipaments
+  end
+
+  def toggle_eqp
+    eqp = Equipament.find params[:id]
+    
+    eqp.update(active: !eqp.active)
+
+    render json: eqp
   end
 
   private

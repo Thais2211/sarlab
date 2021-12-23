@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :lessons do
     collection do
       post 'new_lesson'
+      post 'review'
     end
   end
   
@@ -10,6 +11,10 @@ Rails.application.routes.draw do
     collection do
       get 'get_schedules'
       post 'save_schedule'
+      post 'aprovar'
+      post 'reject'
+      post 'cancel'
+      get 'activities'
     end
   end
     
@@ -24,6 +29,7 @@ Rails.application.routes.draw do
     collection do
       get 'equipaments_labs'
       get 'equipaments_labs_json'
+      post 'toggle_eqp'
     end
   end
   
@@ -32,6 +38,7 @@ Rails.application.routes.draw do
       post 'new_laboratory'
       post 'edit_laboratory'
       get 'get_laboratory'  
+      post 'toggle_lab'
     end
   end
   
@@ -41,6 +48,7 @@ Rails.application.routes.draw do
       post 'nova_disciplina'
       get 'get_disciplina' 
       post 'atualizar_disciplina'     
+      post 'toggle'
     end
   end
 

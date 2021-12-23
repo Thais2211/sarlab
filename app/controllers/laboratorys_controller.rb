@@ -5,7 +5,16 @@ class LaboratorysController < ApplicationController
   # GET /laboratorys
   # GET /laboratorys.json
   def index
-    @laboratorys = Laboratory.all
+    
+    @q = Laboratory.ransack(params[:q])
+    @laboratorys = @q.result
+    
+    if params[:q] && params[:q]['active'] == 'true'
+      @laboratorys = @laboratorys.where(active: true)
+    elsif params[:q] &&  params[:q]['active'] == 'false'
+      @laboratorys = @laboratorys.where(active: false)
+    end
+
   end
 
   def new_laboratory
@@ -26,6 +35,14 @@ class LaboratorysController < ApplicationController
     @laboratory.update(name: params[:name], description: params[:description], local: params[:local])
 
     redirect_to laboratorys_path, notice:'Laboratório atualizado com sucesso'
+  end
+
+  def toggle_lab
+    lab = Laboratory.find params[:id]
+    
+    lab.update(active: !lab.active)
+
+    render json: lab
   end
 
   private

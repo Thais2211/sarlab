@@ -37,7 +37,6 @@ $(document).ready(function(){
 
 function open_modal_edit_disciplina(id)
 {
-  console.log('open modal edit');
   //pegar dados
   $.getJSON("/disciplinas/get_disciplina?id=" + id, function( data ) {
     console.log(data);
@@ -63,4 +62,24 @@ function open_modal_edit_disciplina(id)
   });
 
   $('#modalEditDisciplina').modal('show');
+}
+
+function toggle(id){
+  $.ajax({
+    url: '/disciplinas/toggle',
+    data: {id: id
+          },
+    type: 'POST',
+    success: function (data) {
+      if(data['active'] == true)
+        exibirMsg("Disciplina ativado com sucesso.");
+      else
+        exibirMsg("Disciplina desativado com sucesso.");
+
+      window.location.reload();
+    },error: function(data) {
+      console.log('errors');
+      exibirErro('Ocorreu algum erro.');
+    }
+  });
 }

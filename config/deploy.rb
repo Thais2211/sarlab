@@ -3,8 +3,7 @@ lock "~> 3.15.0"
 
 set :application, "reservas"
 #set :repo_url, "git@example.com:me/my_repo.git"
-#set :repo_url, "git@github.com:Thais2211/reservas.git"
-set :repo_url, 'https://thais2211:Rebecca1810@github.com/Thais2211/reservas.git'
+set :repo_url, "git@github.com:Thais2211/reservas.git"
 
 # Default branch is :master
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -25,7 +24,7 @@ set :log_level, :debug
 
 # Default value for :linked_files is []
 #set :linked_files, %w{config/database.yml}
-append :linked_files, "config/database.yml", "config/storage.yml", "config/master.key" #faz com que use o arquivo do servidor e não do projeto
+append :linked_files, "config/database.yml" #faz com que use o arquivo do servidor e não do projeto
 
 # Default value for linked_dirs is []
 #set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}

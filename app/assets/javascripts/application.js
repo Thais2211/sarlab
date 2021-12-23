@@ -14,6 +14,7 @@
 //= require turbolinks
 //= require jquery/dist/jquery
 //= require jquery-ui
+//= require jquery_ujs
 //= require bootstrap/dist/js/bootstrap
 //= require jquery-easing/jquery.easing.1.3
 //= require datatables
@@ -21,7 +22,6 @@
 //= require toastr/toastr
 //= require dropzone
 //= require moment
-//= require fullcalendar
 //= require bootstrap-datetimepicker
 
 
