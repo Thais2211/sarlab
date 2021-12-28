@@ -103,9 +103,9 @@ $(document).ready(function () {
         $('#agendamento #end').val(moment(end).format("DD/MM/YYYY HH:mm"));
 
         document.getElementById('btnSalvarAgendamento').style.display = 'inline';
-        document.getElementById('btnAprovarReserva').style.display = 'none';
-        document.getElementById('btnRejeitarReserva').style.display = 'none';
-        document.getElementById('btnCancelarReserva').style.display = 'none';
+       // document.getElementById('btnAprovarReserva').style.display = 'none';
+        //document.getElementById('btnRejeitarReserva').style.display = 'none';
+        //document.getElementById('btnCancelarReserva').style.display = 'none';
         $('#agendamento').modal('show');
     },
     eventClick: function(calEvent, jsEvent, view) {

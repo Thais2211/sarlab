@@ -75,7 +75,7 @@ class SchedulesController < ApplicationController
     if schedule.save!
       schedule.create_activity(:solicitou_reserva, owner: current_user, recipient: schedule , params: {responsavel: schedule.user_id})
       
-      ScheduleMailer.new_agendamento("thaismayara.tmsb@gmail.com").deliver_now!
+      ScheduleMailer.new_agendamento(current_user.email).deliver_now!
       redirect_to schedules_path, notice:'Reserva cadastrada com sucesso'
     end
     #render json: schedule
@@ -99,7 +99,7 @@ class SchedulesController < ApplicationController
     if @schedule.save
       @schedule.update(admin_aproved: current_user.id)
       @schedule.create_activity(:aprovou_reserva, owner: current_user, recipient: @schedule)
-      ScheduleMailer.status_reserva("thaismayara.tmsb@gmail.com", "aprovada", nil ).deliver
+      ScheduleMailer.status_reserva(current_user.email, "aprovada", nil ).deliver
 
       render json: @schedule
     else
@@ -132,7 +132,7 @@ class SchedulesController < ApplicationController
       @schedule.update(admin_rejected: current_user.id)
       @schedule.create_activity(:rejeitou_reserva, owner: current_user, recipient: @schedule , params: {motivo: @schedule.reason_rejected})
       
-      ScheduleMailer.status_reserva("thaismayara.tmsb@gmail.com", "rejeitada", @schedule.reason_rejected).deliver
+      ScheduleMailer.status_reserva(current_user.email, "rejeitada", @schedule.reason_rejected).deliver
 
       render json: @schedule
     else
@@ -165,7 +165,7 @@ class SchedulesController < ApplicationController
       @schedule.update(admin_cancel: current_user.id)
       @schedule.create_activity(:cancelou_reserva, owner: current_user, recipient: @schedule , params: {motivo: @schedule.reason_cancel})
       
-      ScheduleMailer.status_reserva("thaismayara.tmsb@gmail.com", "cancelada", @schedule.reason_cancel).deliver
+      ScheduleMailer.status_reserva(current_user.email, "cancelada", @schedule.reason_cancel).deliver
 
       render json: @schedule
     else
